@@ -9,7 +9,8 @@ export default class UserHome extends Component {
     super()
     this.state = {
       currentUser: null,
-      transactions: null
+      transactions: null,
+      categories: ["Auto & Transport", "Bills & Utilities", "Education", "Entertainment", "Food & Dining", "Gifts & Donations", "Health & Fitness", "Miscellaneous", "Shopping", "Travel"]
     }
   }
 
@@ -32,7 +33,7 @@ export default class UserHome extends Component {
       <div>
         <NavBarContainer />
         <Summary />
-        <CategoryContainer />
+        <CategoryContainer transactions={this.state.transaction} categories={this.state.categories}/>
       </div>
     )
   }

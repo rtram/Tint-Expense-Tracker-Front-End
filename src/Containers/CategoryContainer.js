@@ -1,17 +1,16 @@
 import React, { Component } from "react"
+import CategoryBar from "../Components/CategoryBar"
 
 export default class CategoryContainer extends Component {
 
   constructor() {
     super()
-    this.state = {
-    }
   }
 
   render() {
     return (
       <div>
-        CategoryContainer
+        {this.props.categories.map(category => <CategoryBar category={category} />)}
       </div>
     )
   }

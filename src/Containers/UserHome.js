@@ -9,7 +9,7 @@ export default class UserHome extends Component {
     super()
     this.state = {
       currentUser: null,
-      transactions: [],
+      transactions: null,
       categories: ["Auto & Transport", "Bills & Utilities", "Education", "Entertainment", "Food & Dining", "Gifts & Donations", "Health & Fitness", "Miscellaneous", "Shopping", "Travel"]
     }
   }

@@ -3,17 +3,27 @@ import Transactions from "./Transactions"
 
 export default class CategoryBar extends Component {
 
-  constructor() {
-    super()
-    this.state = {
-    }
-  }
-
   render() {
-    let categoryTransactions = this.props.transactions.filter(transaction => transaction.category.name === this.props.category)
+    let categoryTotal;
+
+    if (this.props.transactions) {
+      let categoryTransactions = this.props.transactions.filter(transaction => transaction.category.name === this.props.category)
+
+      categoryTransactions = categoryTransactions.map(transaction => transaction.amount)
+
+      let reducer = (accumulator, currentValue) => accumulator + currentValue
+      categoryTotal = categoryTransactions.reduce(reducer)
+      categoryTotal = Math.floor(categoryTotal * 100) / 100
+    }
+
     return (
       <div>
-        {categoryTransactions.map(transaction => <Transactions key={transaction.id} transaction={transaction}/>)}
+        <div>
+          {this.props.category}
+        </div>
+        <div>
+          {categoryTotal}
+        </div>
       </div>
     )
   }

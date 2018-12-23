@@ -10,9 +10,12 @@ export default class Transactions extends Component {
 
   render() {
     return (
-      <div>
-        {this.props.transaction.amount}
-      </div>
+      <tr>
+        <td>{this.props.transaction.date}</td>
+        <td>{this.props.transaction.description}</td>
+        <td>{this.props.transaction.category.name}</td>
+        <td>{this.props.transaction.amount}</td>
+      </tr>
     )
   }
 }

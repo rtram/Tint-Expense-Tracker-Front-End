@@ -1,22 +1,18 @@
 import React, { Component } from "react"
+import {Link} from 'react-router-dom'
+import {Button} from 'react-bootstrap'
 
 export default class CategoryBar extends Component {
 
-  selectCategory = (categoryName, categoryTransactions) => {
-    this.props.setCategory(categoryName, categoryTransactions)
-  }
-
   render() {
+    let transactions;
     let categoryTotal;
-    let categoryTransactions;
-    let categoryObject;
 
-    if (this.props.transactions) {
-      categoryTransactions = this.props.transactions.filter(transaction => transaction.category.name === this.props.category)
+    if (this.props.category) {
+      transactions = this.props.category.transactions
+      transactions = transactions.filter(transactionObject => transactionObject.user.id === parseInt(this.props.userId))
 
-      categoryObject = categoryTransactions[0].category
-
-      categoryTotal = categoryTransactions.map(transaction => transaction.amount)
+      categoryTotal = transactions.map(transaction => transaction.amount)
 
       let reducer = (accumulator, currentValue) => accumulator + currentValue
       categoryTotal = categoryTotal.reduce(reducer)
@@ -24,14 +20,20 @@ export default class CategoryBar extends Component {
     }
 
     return (
-      <div onClick={() => this.selectCategory(categoryObject, categoryTransactions)}>
-        <div>
-          {this.props.category}
-        </div>
-        <div>
-          ${categoryTotal}
-        </div>
+      <div >
+        <Link to={`/users/${this.props.userId}/${this.props.category.id}`}>
+          <Button bsStyle="primary">
+            <div>
+              {this.props.category.name}
+            </div>
+            <div>
+              ${categoryTotal}
+            </div>
+          </Button>
+        </Link>
       </div>
     )
   }
 }
+
+// onClick={() => this.props.handleCategoryBarClick(this.props.category.id)}

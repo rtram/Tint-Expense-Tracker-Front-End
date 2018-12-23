@@ -9,23 +9,8 @@ export default class UserHome extends Component {
   constructor() {
     super()
     this.state = {
-      currentUser: null,
-      transactions: null,
       categoryTransactions: null,
-      categories: ["Auto & Transport", "Bills & Utilities", "Education", "Entertainment", "Food & Dining", "Gifts & Donations", "Health & Fitness", "Miscellaneous", "Shopping", "Travel"],
-      selectedCategory: null,
-      selectedCategoryTransactions: null
     }
-  }
-
-  fetchUserTransactions = () => {
-    fetch(`http://localhost:3001/users/${this.props.userId}`)
-      .then(res => res.json())
-      .then(json => {
-        this.setState({
-          transactions: json.transactions
-        })
-      })
   }
 
   fetchCategoryTransactions = () => {
@@ -39,18 +24,12 @@ export default class UserHome extends Component {
   }
 
   componentDidMount() {
-    this.fetchUserTransactions()
     this.fetchCategoryTransactions()
   }
 
-
-  setCategory = (categoryName, categoryTransactions) => {
-    this.setState({
-      selectedCategory: categoryName,
-      selectedCategoryTransactions: categoryTransactions
-    })
+  handleCategoryBarClick = (categoryId) => {
+    debugger
   }
-
 
   render() {
     return (
@@ -80,12 +59,14 @@ export default class UserHome extends Component {
         }} />
 
         <Route path='/users/:id' render={props => {
+          let userId = props.match.params.id
           return (
             <div>
             <Summary />
               <CategoryContainer
-                transactions={this.state.transactions} categories={this.state.categories}
-                setCategory={this.state.setCategory}
+                transactions={this.state.categoryTransactions}
+                userId={userId}
+                handleCategoryBarClick={this.handleCategoryBarClick}
               />
             </div>
           )

@@ -9,7 +9,7 @@ export default class UserHome extends Component {
     super()
     this.state = {
       currentUser: null,
-      transactions: null,
+      transactions: [],
       categories: ["Auto & Transport", "Bills & Utilities", "Education", "Entertainment", "Food & Dining", "Gifts & Donations", "Health & Fitness", "Miscellaneous", "Shopping", "Travel"]
     }
   }
@@ -17,11 +17,11 @@ export default class UserHome extends Component {
   fetchTransactions = () => {
     fetch("http://localhost:3001/users/1")
       .then(res => res.json())
-      .then(json => (
+      .then(json => {
         this.setState({
-          transactions: json
+          transactions: json.transactions
         })
-      ))
+      })
   }
 
   componentDidMount() {
@@ -32,8 +32,8 @@ export default class UserHome extends Component {
     return (
       <div>
         <NavBarContainer />
-        <Summary />
-        <CategoryContainer transactions={this.state.transaction} categories={this.state.categories}/>
+        <Summary  />
+        <CategoryContainer transactions={this.state.transactions} categories={this.state.categories}/>
       </div>
     )
   }

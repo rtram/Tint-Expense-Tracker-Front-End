@@ -3,14 +3,12 @@ import CategoryBar from "../Components/CategoryBar"
 
 export default class CategoryContainer extends Component {
 
-  constructor() {
-    super()
-  }
-
   render() {
     return (
       <div>
-        {this.props.categories.map(category => <CategoryBar category={category} />)}
+        {this.props.categories.map(category => {
+          return <CategoryBar key={category} category={category} transactions={this.props.transactions}/>
+        })}
       </div>
     )
   }

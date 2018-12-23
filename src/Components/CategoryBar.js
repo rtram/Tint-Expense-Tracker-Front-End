@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import Transactions from "./Transactions"
 
 export default class CategoryBar extends Component {
 
@@ -17,12 +16,12 @@ export default class CategoryBar extends Component {
     }
 
     return (
-      <div>
+      <div >
         <div>
           {this.props.category}
         </div>
         <div>
-          {categoryTotal}
+          ${categoryTotal}
         </div>
       </div>
     )

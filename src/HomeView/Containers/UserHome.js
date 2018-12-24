@@ -3,6 +3,7 @@ import Summary from "./Summary"
 import CategoryContainer from "./CategoryContainer"
 import CategoryDetails from "../../CategoryView/Containers/CategoryDetails"
 import {Route, Switch} from 'react-router-dom'
+import {Jumbotron} from "react-bootstrap"
 
 export default class UserHome extends Component {
 
@@ -60,8 +61,20 @@ export default class UserHome extends Component {
 
         <Route path='/users/:id' render={props => {
           let userId = props.match.params.id
+          let currentUser;
+
+          if (this.state.categoryTransactions) {
+            currentUser = this.state.categoryTransactions[0].transactions.find(transactionObject => transactionObject.user.id === parseInt(userId))
+
+            currentUser = currentUser.user.first_name
+          }
+
           return (
             <div>
+            <Jumbotron className="Jumbotron">
+              <h1>Welcome Back {currentUser}!</h1>
+            </Jumbotron>
+
             <Summary />
               <CategoryContainer
                 transactions={this.state.categoryTransactions}

@@ -35,5 +35,3 @@ export default class CategoryBar extends Component {
     )
   }
 }
-
-// onClick={() => this.props.handleCategoryBarClick(this.props.category.id)}

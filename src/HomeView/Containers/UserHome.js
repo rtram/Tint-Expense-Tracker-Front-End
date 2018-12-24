@@ -28,10 +28,6 @@ export default class UserHome extends Component {
     this.fetchCategoryTransactions()
   }
 
-  handleCategoryBarClick = (categoryId) => {
-    debugger
-  }
-
   render() {
     return (
       <div>
@@ -79,7 +75,6 @@ export default class UserHome extends Component {
               <CategoryContainer
                 transactions={this.state.categoryTransactions}
                 userId={userId}
-                handleCategoryBarClick={this.handleCategoryBarClick}
               />
             </div>
           )

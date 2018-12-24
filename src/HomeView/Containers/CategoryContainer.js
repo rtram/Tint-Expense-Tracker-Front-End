@@ -11,7 +11,6 @@ export default class CategoryContainer extends Component {
           key={category.id}
           userId={this.props.userId}
           category={category}
-          handleCategoryBarClick={this.props.handleCategoryBarClick}
         />) : null
         }
       </div>

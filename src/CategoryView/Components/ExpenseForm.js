@@ -20,13 +20,45 @@ export default class ExpenseForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
+
+    let categoryObject;
+    let currentUserObject;
+
+    if (this.props.selectedCategory) {
+      categoryObject = {
+        id: this.props.selectedCategory.id,
+        name: this.props.selectedCategory.name
+      }
+
+      currentUserObject = {
+        id: this.props.currentUserObject.id,
+        first_name: this.props.currentUserObject.first_name,
+        last_name: this.props.currentUserObject.last_name
+      }
+    }
+
+    const { date, description, amount } = this.state
+    fetch('http://localhost:3001/transactions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        date: date,
+        description: description,
+        amount: amount,
+        category: categoryObject,
+        user: currentUserObject
+      })
+    })
   }
 
   render() {
     return (
       <div>
         <h3>Add an Expense </h3>
-        <Form onSubmit={this.handleSubmit}>
+        <Form>
           <FormGroup>
             <FormControl
               type="date"
@@ -55,7 +87,7 @@ export default class ExpenseForm extends Component {
               onChange={this.handleChange}
             />
           </FormGroup>
-          <Button>Submit</Button>
+          <Button onClick={this.handleSubmit}>Submit</Button>
         </Form>
       </div>
     )

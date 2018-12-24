@@ -37,6 +37,11 @@ export default class UserHome extends Component {
           let userId = props.match.params.id
           let selectedCategory;
           let transactions;
+          let currentUserObject;
+
+          if (this.state.categoryTransactions) {
+            currentUserObject = this.state.categoryTransactions[0].transactions.find(transactionObject => transactionObject.user.id === parseInt(userId)).user
+          }
 
           if (this.state.categoryTransactions) {
             selectedCategory = this.state.categoryTransactions.filter(categoryObject => categoryObject.id === parseInt(categoryId))[0]
@@ -51,6 +56,7 @@ export default class UserHome extends Component {
             <CategoryDetails
               selectedCategory={selectedCategory}
               transactions={transactions}
+              currentUserObject={currentUserObject}
             />
           )
         }} />

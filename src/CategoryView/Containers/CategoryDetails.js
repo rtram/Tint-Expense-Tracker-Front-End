@@ -35,7 +35,10 @@ export default class CategoryDetails extends Component {
           </tbody>
         </Table>
 
-        <ExpenseForm selectedCategory={this.props.selectedCategory} transactions={this.props.transactions} />
+        <ExpenseForm
+          selectedCategory={this.props.selectedCategory} transactions={this.props.transactions}
+          currentUserObject={this.props.currentUserObject}
+        />
 
         <Table bordered condensed hover>
           <thead>

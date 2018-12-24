@@ -22,7 +22,7 @@ export default class ExpenseForm extends Component {
     event.preventDefault()
 
     let categoryObject;
-    let currentUserObject;
+    let userObject;
 
     if (this.props.selectedCategory) {
       categoryObject = {
@@ -30,10 +30,10 @@ export default class ExpenseForm extends Component {
         name: this.props.selectedCategory.name
       }
 
-      currentUserObject = {
-        id: this.props.currentUserObject.id,
-        first_name: this.props.currentUserObject.first_name,
-        last_name: this.props.currentUserObject.last_name
+      userObject = {
+        id: this.props.userObject.id,
+        first_name: this.props.userObject.first_name,
+        last_name: this.props.userObject.last_name
       }
     }
 
@@ -42,7 +42,7 @@ export default class ExpenseForm extends Component {
         description: this.state.description,
         amount: this.state.amount,
         category: categoryObject,
-        user: currentUserObject
+        user: userObject
     }
 
     fetch('http://localhost:3001/transactions', {

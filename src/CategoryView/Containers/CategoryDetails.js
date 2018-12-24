@@ -1,7 +1,8 @@
 import React, { Component } from "react"
 import Transaction from "../Components/Transaction"
 import ExpenseForm from "../Components/ExpenseForm"
-import {Table} from 'react-bootstrap'
+import {Link} from 'react-router-dom'
+import {Table, Button} from 'react-bootstrap'
 
 export default class CategoryDetails extends Component {
 
@@ -18,6 +19,15 @@ export default class CategoryDetails extends Component {
 
     return (
       <div>
+
+      {this.props.userObject ?
+        <Link to={`/users/${this.props.userObject.id}/`}>
+          <Button bsStyle="primary">
+            Go Back
+          </Button>
+        </Link>: null }
+
+
       {this.props.selectedCategory ? this.props.selectedCategory.name : null}
         <Table bordered condensed hover>
           <thead>
@@ -37,7 +47,7 @@ export default class CategoryDetails extends Component {
 
         <ExpenseForm
           selectedCategory={this.props.selectedCategory} transactions={this.props.transactions}
-          currentUserObject={this.props.currentUserObject}
+          userObject={this.props.userObject}
           addTransaction={this.props.addTransaction}
         />
 

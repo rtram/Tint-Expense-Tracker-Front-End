@@ -58,7 +58,7 @@ export default class UserHome extends Component {
             <CategoryDetails
               selectedCategory={selectedCategory}
               transactions={userTransactions}
-              currentUserObject={currentUserObject}
+              userObject={currentUserObject}
               addTransaction={this.addTransaction}
             />
           )

@@ -6,9 +6,9 @@ export default class ExpenseForm extends Component {
   constructor() {
     super()
     this.state = {
-      date: null,
-      description: null,
-      amount: null
+      date: "",
+      description: "",
+      amount: ""
     }
   }
 
@@ -56,12 +56,10 @@ export default class ExpenseForm extends Component {
     this.props.addTransaction(jsonObject)
 
     this.setState({
-      date: null,
-      description: null,
-      amount: null
+      date: "",
+      description: "",
+      amount: ""
     })
-
-    debugger
   }
 
   render() {

@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import Transaction from "../Components/Transaction"
-import {Table} from 'react-bootstrap'
+import {Table, FormControl, Button} from 'react-bootstrap'
 
 export default class CategoryDetails extends Component {
 
@@ -31,6 +31,66 @@ export default class CategoryDetails extends Component {
           {this.props.transactions ? this.props.transactions.map(transaction => (
             <Transaction key={transaction.id} transaction={transaction}/>)) : null
           }
+          </tbody>
+        </Table>
+
+        <Table>
+          <thead>
+            <tr>
+              Add a New Expense
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>
+              <form>
+                <FormControl
+                  id="formControlsText"
+                  type="date"
+                  label="Text"
+                  placeholder="Date"
+                />
+              </form>
+              </td>
+              <td>
+              <form>
+                <FormControl
+                  id="formControlsText"
+                  type="text"
+                  label="Text"
+                  placeholder="Description"
+                />
+              </form>
+              </td>
+              <td>
+              <form>
+                {this.props.selectedCategory ? this.props.selectedCategory.name : null}
+              </form>
+              </td>
+              <td>
+              <form>
+                <FormControl
+                  id="formControlsText"
+                  type="text"
+                  label="Text"
+                  placeholder="$ Amount"
+                />
+              </form>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+              <Button bsStyle="primary">
+                <div>
+                  Add Expense
+                </div>
+              </Button>
+              </td>
+            </tr>
           </tbody>
         </Table>
 

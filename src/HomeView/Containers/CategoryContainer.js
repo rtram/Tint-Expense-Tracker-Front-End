@@ -6,7 +6,8 @@ export default class CategoryContainer extends Component {
   render() {
     return (
       <div>
-        {this.props.transactions ? this.props.transactions.map(category => <CategoryBar
+        {this.props.transactions ? this.props.transactions.map(category =>
+         <CategoryBar
           key={category.id}
           userId={this.props.userId}
           category={category}

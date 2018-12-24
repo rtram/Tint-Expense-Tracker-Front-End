@@ -28,6 +28,10 @@ export default class UserHome extends Component {
     this.fetchTransactions()
   }
 
+  addTransaction = (transactionObject) => {
+    this.setState({ transactions: [...this.state.transactions, transactionObject] })
+  }
+
   render() {
     return (
       <div>
@@ -45,6 +49,7 @@ export default class UserHome extends Component {
 
           if (this.state.transactions) {
             selectedCategory = this.state.transactions.filter(transactionObject => transactionObject.category.id === parseInt(categoryId))
+            selectedCategory = selectedCategory[0].category
 
             userTransactions = this.state.transactions.filter(transactionObject => (transactionObject.user.id === parseInt(userId) && transactionObject.category.id === parseInt(categoryId)))
           }
@@ -54,6 +59,7 @@ export default class UserHome extends Component {
               selectedCategory={selectedCategory}
               transactions={userTransactions}
               currentUserObject={currentUserObject}
+              addTransaction={this.addTransaction}
             />
           )
         }} />

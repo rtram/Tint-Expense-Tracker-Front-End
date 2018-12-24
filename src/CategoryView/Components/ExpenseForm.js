@@ -37,21 +37,31 @@ export default class ExpenseForm extends Component {
       }
     }
 
-    const { date, description, amount } = this.state
+    let jsonObject = {
+        date: this.state.date,
+        description: this.state.description,
+        amount: this.state.amount,
+        category: categoryObject,
+        user: currentUserObject
+    }
+
     fetch('http://localhost:3001/transactions', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        date: date,
-        description: description,
-        amount: amount,
-        category: categoryObject,
-        user: currentUserObject
-      })
+      body: JSON.stringify(jsonObject)
     })
+
+    this.props.addTransaction(jsonObject)
+
+    this.setState({
+      date: null,
+      description: null,
+      amount: null
+    })
+
+    debugger
   }
 
   render() {

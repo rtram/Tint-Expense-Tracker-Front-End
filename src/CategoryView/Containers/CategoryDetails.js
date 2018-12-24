@@ -38,6 +38,7 @@ export default class CategoryDetails extends Component {
         <ExpenseForm
           selectedCategory={this.props.selectedCategory} transactions={this.props.transactions}
           currentUserObject={this.props.currentUserObject}
+          addTransaction={this.props.addTransaction}
         />
 
         <Table bordered condensed hover>

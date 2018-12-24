@@ -10,22 +10,22 @@ export default class UserHome extends Component {
   constructor() {
     super()
     this.state = {
-      categoryTransactions: null,
+      transactions: null,
     }
   }
 
-  fetchCategoryTransactions = () => {
-    fetch(`http://localhost:3001/categories`)
+  fetchTransactions = () => {
+    fetch(`http://localhost:3001/transactions`)
       .then(res => res.json())
       .then(json => {
         this.setState({
-          categoryTransactions: json
+          transactions: json
         })
       })
   }
 
   componentDidMount() {
-    this.fetchCategoryTransactions()
+    this.fetchTransactions()
   }
 
   render() {
@@ -36,26 +36,23 @@ export default class UserHome extends Component {
           let categoryId = props.match.params.categoryId
           let userId = props.match.params.id
           let selectedCategory;
-          let transactions;
+          let userTransactions;
           let currentUserObject;
 
-          if (this.state.categoryTransactions) {
-            currentUserObject = this.state.categoryTransactions[0].transactions.find(transactionObject => transactionObject.user.id === parseInt(userId)).user
+          if (this.state.transactions) {
+            currentUserObject = this.state.transactions.find(transactionObject => transactionObject.user.id === parseInt(userId)).user
           }
 
-          if (this.state.categoryTransactions) {
-            selectedCategory = this.state.categoryTransactions.filter(categoryObject => categoryObject.id === parseInt(categoryId))[0]
+          if (this.state.transactions) {
+            selectedCategory = this.state.transactions.filter(transactionObject => transactionObject.category.id === parseInt(categoryId))
 
-            transactions = selectedCategory.transactions.filter(transactionObject => transactionObject.user.id === parseInt(userId))
-
-            selectedCategory.transactions = null
-            selectedCategory.users = null
+            userTransactions = this.state.transactions.filter(transactionObject => (transactionObject.user.id === parseInt(userId) && transactionObject.category.id === parseInt(categoryId)))
           }
 
           return (
             <CategoryDetails
               selectedCategory={selectedCategory}
-              transactions={transactions}
+              transactions={userTransactions}
               currentUserObject={currentUserObject}
             />
           )
@@ -63,24 +60,27 @@ export default class UserHome extends Component {
 
         <Route path='/users/:id' render={props => {
           let userId = props.match.params.id
-          let currentUser;
+          let userTransactions;
+          let currentUserObject;
 
-          if (this.state.categoryTransactions) {
-            currentUser = this.state.categoryTransactions[0].transactions.find(transactionObject => transactionObject.user.id === parseInt(userId))
+          if (this.state.transactions) {
+            currentUserObject = this.state.transactions.find(transactionObject => transactionObject.user.id === parseInt(userId)).user
+          }
 
-            currentUser = currentUser.user.first_name
+          if (this.state.transactions) {
+            userTransactions = this.state.transactions.filter(transactionObject => (transactionObject.user.id === parseInt(userId)))
           }
 
           return (
             <div>
             <Jumbotron className="Jumbotron">
-              <h1>Welcome Back {currentUser}!</h1>
+              <h1>Welcome Back {currentUserObject ? currentUserObject.first_name : null}!</h1>
             </Jumbotron>
 
             <Summary />
               <CategoryContainer
-                transactions={this.state.categoryTransactions}
-                userId={userId}
+                transactions={userTransactions}
+                userObject={currentUserObject}
               />
             </div>
           )

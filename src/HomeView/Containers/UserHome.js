@@ -15,11 +15,12 @@ export default class UserHome extends Component {
   }
 
   fetchTransactions = () => {
-    fetch(`http://localhost:3001/transactions`)
+    let userId = this.props.userId
+    fetch(`http://localhost:3001/users/${userId}`)
       .then(res => res.json())
       .then(json => {
         this.setState({
-          transactions: json
+          transactions: json.transactions
         })
       })
   }

@@ -36,11 +36,12 @@ export default class CategoryDetails extends Component {
               <th>Description</th>
               <th>Category</th>
               <th>Amount</th>
+              <th>Update</th>
             </tr>
           </thead>
           <tbody>
           {this.props.transactions ? this.props.transactions.map(transaction => (
-            <Transaction key={transaction.id} transaction={transaction}/>)) : null
+            <Transaction key={transaction.id} transactionObject={transaction}/>)) : null
           }
           </tbody>
         </Table>

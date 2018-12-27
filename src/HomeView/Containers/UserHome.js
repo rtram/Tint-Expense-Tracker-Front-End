@@ -40,7 +40,18 @@ export default class UserHome extends Component {
   }
 
   addTransaction = (transactionObject) => {
-    this.setState({ transactions: [...this.state.transactions, transactionObject] })
+    let allTransactions = [...this.state.transactions, transactionObject]
+
+    let currentMonthTransactions = allTransactions.filter(transactionObject => {
+      let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+      let presentMonth = new Date().getMonth() + 1
+      return presentMonth === transactionMonthInt
+    })
+
+    this.setState({
+      transactions: allTransactions,
+      currentMonthTransactions: currentMonthTransactions
+    })
   }
 
   handleDelete = (transactionObject) => {
@@ -60,8 +71,16 @@ export default class UserHome extends Component {
     let copyOfTransactions = [...this.state.transactions]
     let index = copyOfTransactions.indexOf(transactionObject)
     copyOfTransactions.splice(index, 1, updateObject)
+
+    let currentMonthTransactions = copyOfTransactions.filter(transactionObject => {
+      let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+      let presentMonth = new Date().getMonth() + 1
+      return presentMonth === transactionMonthInt
+    })
+
     this.setState({
-      transactions: copyOfTransactions
+      transactions: copyOfTransactions,
+      currentMonthTransactions: currentMonthTransactions
     })
   }
 
@@ -73,7 +92,7 @@ export default class UserHome extends Component {
           let categoryId = props.match.params.categoryId
           let userId = props.match.params.id
           let selectedCategory;
-          let userTransactions;
+          let userCurrentTransactions;
           let currentUserObject;
 
           if (this.state.transactions) {
@@ -84,13 +103,13 @@ export default class UserHome extends Component {
             selectedCategory = this.state.transactions.filter(transactionObject => transactionObject.category.id === parseInt(categoryId))
             selectedCategory = selectedCategory[0].category
 
-            userTransactions = this.state.transactions.filter(transactionObject => (transactionObject.user.id === parseInt(userId) && transactionObject.category.id === parseInt(categoryId)))
+            userCurrentTransactions = this.state.currentMonthTransactions.filter(transactionObject => (transactionObject.category.id === parseInt(categoryId)))
           }
 
           return (
             <CategoryDetails
               selectedCategory={selectedCategory}
-              transactions={userTransactions}
+              transactions={userCurrentTransactions}
               userObject={currentUserObject}
               addTransaction={this.addTransaction}
               handleDelete={this.handleDelete}

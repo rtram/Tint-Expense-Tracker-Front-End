@@ -18,10 +18,11 @@ export default class Summary extends Component {
       summaryTotal = summaryTotal.reduce(reducer)
       summaryTotal = Math.floor(summaryTotal * 100) / 100
     }
-
     return (
       <div>
         You have spent <strong>${summaryTotal}</strong> in <strong>{this.props.currentMonth}</strong>!
+
+
       </div>
     )
   }

@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import Summary from "./Summary"
 import CategoryContainer from "./CategoryContainer"
 import CategoryDetails from "../../CategoryView/Containers/CategoryDetails"
+import Chart from "../Components/Chart.js"
 import {Route, Switch} from 'react-router-dom'
 import {Jumbotron} from "react-bootstrap"
 
@@ -148,6 +149,7 @@ export default class UserHome extends Component {
               transactions={this.state.currentMonthTransactions}
               currentMonth={currentMonth}
             />
+            <Chart months={months}/>
             <CategoryContainer
               transactions={this.state.currentMonthTransactions}
               userObject={currentUserObject}

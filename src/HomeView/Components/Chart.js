@@ -5,41 +5,44 @@ export default class Chart extends Component {
   constructor() {
     super()
     this.state = {
-      type: 'bar',
-      data: {
-          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-          datasets: [{
-              label: '# of Votes',
-              data: [120, 19, 3, 500, 2, 3],
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)'
-              ],
-              borderColor: [
-                  'rgba(255,99,132,1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)'
-              ],
-              borderWidth: 1
-          }]
-      },
-      options: {
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero:true
-                  }
-              }]
-          }
-      }
+
     }
+  }
+
+  componentDidMount() {
+    console.log(this.props.label)
+    console.log(this.props.data)
+    this.setState({
+        type: 'bar',
+        data: {
+            labels: this.props.label,
+            datasets: [{
+                label: 'Money Spent',
+                data: this.props.data,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    })
   }
 
   render() {
@@ -50,7 +53,15 @@ export default class Chart extends Component {
           width={500}
           height={500}
           options={{
-            maintainAspectRatio: false
+            title: {
+              display: true,
+              text: "Last Three Months's Spending",
+              fontsize: 100
+            },
+            legend: {
+              display: true,
+              position: "right"
+            }
           }}
         />
       </div>

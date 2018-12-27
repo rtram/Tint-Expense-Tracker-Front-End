@@ -7,6 +7,7 @@ export default class Transactions extends Component {
     super()
     this.state = {
       show: false,
+      id: "",
       date: "",
       description: "",
       amount: ""
@@ -15,6 +16,7 @@ export default class Transactions extends Component {
 
   componentDidMount() {
     this.setState({
+      id: this.props.transactionObject.id,
       date: this.props.transactionObject.date,
       description: this.props.transactionObject.description,
       amount: this.props.transactionObject.amount
@@ -23,6 +25,26 @@ export default class Transactions extends Component {
 
   handleToggle = () => {
     this.setState({ show: !this.state.show });
+  }
+
+  handleUpdate = () => {
+    let updateObject = {
+      date: this.state.date,
+      description: this.state.description,
+      amount: this.state.amount
+    }
+
+    fetch(`http://localhost:3001/transactions/${this.state.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(updateObject)
+    })
+  }
+
+  handleDelete = () => {
+    console.log("Delete")
   }
 
   handleChange = (event) => {
@@ -35,7 +57,7 @@ export default class Transactions extends Component {
     return (
       <tr>
         {!this.state.show ?
-        <td>{this.props.transactionObject.date}</td> :
+        <td>{this.state.date}</td> :
         <td>
         <FormControl
           type="date"
@@ -48,7 +70,7 @@ export default class Transactions extends Component {
         </td>}
 
         {!this.state.show ?
-        <td>{this.props.transactionObject.description}</td> :
+        <td>{this.state.description}</td> :
         <td>
         <FormControl
           type="text"
@@ -64,7 +86,7 @@ export default class Transactions extends Component {
         <td>{this.props.transactionObject.category.name}</td>
 
         {!this.state.show ?
-        <td>{this.props.transactionObject.amount}</td> :
+        <td>{this.state.amount}</td> :
         <td>
         <FormControl
           type="number"
@@ -77,16 +99,43 @@ export default class Transactions extends Component {
         </td>
         }
 
-        <td>
-          <Button
-            ref={button => {
-              this.target = button;
-            }}
-            onClick={this.handleToggle}
-          >
-            Update
-          </Button>
-        </td>
+        {!this.state.show ?
+          <td>
+            <Button
+              ref={button => {
+                this.target = button;
+              }}
+              onClick={this.handleToggle}
+            >
+              <img alt="" src="https://img.icons8.com/color/48/000000/pencil.png" />
+            </Button>
+          </td> :
+          <td>
+            <Button
+              ref={button => {
+                this.target = button;
+              }}
+              onClick={() => {
+                this.handleToggle()
+                this.handleUpdate()
+              }}
+            >
+              Save
+            </Button>
+            <Button
+              ref={button => {
+                this.target = button;
+              }}
+              onClick={() => {
+                this.handleToggle()
+                this.handleDelete()
+              }}
+            >
+              Delete
+            </Button>
+          </td>
+        }
+
       </tr>
     )
   }

@@ -36,7 +36,7 @@ export default class CategoryDetails extends Component {
               <th>Description</th>
               <th>Category</th>
               <th>Amount</th>
-              <th>Update</th>
+              <th>Edit</th>
             </tr>
           </thead>
           <tbody>

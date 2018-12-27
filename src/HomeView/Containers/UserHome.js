@@ -85,6 +85,17 @@ export default class UserHome extends Component {
   }
 
   render() {
+
+    //GET CURRENT MONTH=========================================================
+    let months    =['January','February','March','April','May','June','July','August','September','October','November','December']
+
+    let currentMonthGetter = () => {
+      let index = new Date().getMonth()
+      return months[index]
+    }
+
+    let currentMonth = currentMonthGetter()
+
     return (
       <div>
         <Switch>
@@ -114,6 +125,7 @@ export default class UserHome extends Component {
               addTransaction={this.addTransaction}
               handleDelete={this.handleDelete}
               handleTransactionArrayUpdate={this.handleTransactionArrayUpdate}
+              currentMonth={currentMonth}
             />
           )
         }} />
@@ -132,11 +144,15 @@ export default class UserHome extends Component {
               <h1>Welcome Back {currentUserObject ? currentUserObject.first_name : null}!</h1>
             </Jumbotron>
 
-            <Summary />
-              <CategoryContainer
-                transactions={this.state.currentMonthTransactions}
-                userObject={currentUserObject}
-              />
+            <Summary
+              transactions={this.state.currentMonthTransactions}
+              currentMonth={currentMonth}
+            />
+            <CategoryContainer
+              transactions={this.state.currentMonthTransactions}
+              userObject={currentUserObject}
+              currentMonth={currentMonth}
+            />
             </div>
           )
         }} />

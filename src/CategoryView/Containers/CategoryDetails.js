@@ -17,14 +17,6 @@ export default class CategoryDetails extends Component {
       categoryTotal = Math.floor(categoryTotal * 100) / 100
     }
 
-    //GET CURRENT MONTH=========================================================
-    let months    =['January','February','March','April','May','June','July','August','September','October','November','December']
-
-    let currentMonthGetter = () => {
-      let index = new Date().getMonth()
-      return months[index]
-    }
-
     return (
       <div>
 
@@ -36,7 +28,7 @@ export default class CategoryDetails extends Component {
         </Link>: null }
 
 
-      <strong>{currentMonthGetter()} Transactions</strong>
+      <strong>{this.props.currentMonth} Transactions</strong>
 
       {this.props.selectedCategory ? this.props.selectedCategory.name : null}
         <Table bordered condensed hover>

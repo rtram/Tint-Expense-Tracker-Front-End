@@ -11,7 +11,7 @@ export default class CategoryBar extends Component {
         <Link to={`/users/${this.props.userObject.id}/${this.props.categoryId}`}>
           <Button bsStyle="primary">
             <div>
-              {this.props.categoryName}
+              <h3>{this.props.categoryName}</h3>
             </div>
             <div>
               ${this.props.categoryTotal}

@@ -27,17 +27,9 @@ export default class CategoryContainer extends Component {
       }
     }
 
-    //GET CURRENT MONTH=========================================================
-    let months    =['January','February','March','April','May','June','July','August','September','October','November','December']
-
-    let currentMonthGetter = () => {
-      let index = new Date().getMonth()
-      return months[index]
-    }
-
     return (
       <div>
-        How is {currentMonthGetter()} Looking?
+        How is each Spending Category Looking?
         {this.props.transactions ? categoryArrTotals.map(categoryTotalObject =>
          <CategoryBar
           key={categoryTotalObject.id}

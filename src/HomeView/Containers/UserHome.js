@@ -33,6 +33,19 @@ export default class UserHome extends Component {
     this.setState({ transactions: [...this.state.transactions, transactionObject] })
   }
 
+  handleDelete = (transactionObject) => {
+    fetch(`http://localhost:3001/transactions/${transactionObject.id}`, {
+      method: "DELETE"
+    })
+
+    let copyOfTransactions = [...this.state.transactions]
+    let index = this.state.transactions.indexOf(transactionObject)
+    copyOfTransactions.splice(index, 1)
+    this.setState({
+      transactions: copyOfTransactions
+    })
+  }
+
   render() {
     return (
       <div>
@@ -61,6 +74,7 @@ export default class UserHome extends Component {
               transactions={userTransactions}
               userObject={currentUserObject}
               addTransaction={this.addTransaction}
+              handleDelete={this.handleDelete}
             />
           )
         }} />

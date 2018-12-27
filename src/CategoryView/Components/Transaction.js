@@ -43,10 +43,6 @@ export default class Transactions extends Component {
     })
   }
 
-  handleDelete = () => {
-    console.log("Delete")
-  }
-
   handleChange = (event) => {
     const name = event.target.name
     const value = event.target.value
@@ -128,7 +124,7 @@ export default class Transactions extends Component {
               }}
               onClick={() => {
                 this.handleToggle()
-                this.handleDelete()
+                this.props.handleDelete(this.props.transactionObject)
               }}
             >
               Delete

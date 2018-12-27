@@ -29,10 +29,15 @@ export default class Transactions extends Component {
 
   handleUpdate = () => {
     let updateObject = {
+      id: this.state.id,
       date: this.state.date,
       description: this.state.description,
-      amount: this.state.amount
+      amount: parseInt(this.state.amount),
+      category: this.props.transactionObject.category,
+      user: this.props.transactionObject.user
     }
+
+    this.props.handleTransactionArrayUpdate(updateObject, this.props.transactionObject)
 
     fetch(`http://localhost:3001/transactions/${this.state.id}`, {
       method: "PATCH",

@@ -41,7 +41,7 @@ export default class CategoryDetails extends Component {
           </thead>
           <tbody>
           {this.props.transactions ? this.props.transactions.map(transaction => (
-            <Transaction key={transaction.id} transactionObject={transaction} handleDelete={this.props.handleDelete}/>)) : null
+            <Transaction key={transaction.id} transactionObject={transaction} handleDelete={this.props.handleDelete} handleTransactionArrayUpdate={this.props.handleTransactionArrayUpdate}/>)) : null
           }
           </tbody>
         </Table>

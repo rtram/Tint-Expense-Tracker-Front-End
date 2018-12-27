@@ -11,7 +11,12 @@ export default class UserHome extends Component {
     super()
     this.state = {
       transactions: null,
+      currentMonthTransactions: null
     }
+  }
+
+  componentDidMount() {
+    this.fetchTransactions()
   }
 
   fetchTransactions = () => {
@@ -19,14 +24,19 @@ export default class UserHome extends Component {
     fetch(`http://localhost:3001/users/${userId}`)
       .then(res => res.json())
       .then(json => {
+
+        // FILTERS CURRENT MONTH TRANSACTIONS ==================================
+        let currentMonthTransactions = json.transactions.filter(transactionObject => {
+          let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+          let presentMonth = new Date().getMonth() + 1
+          return presentMonth === transactionMonthInt
+        })
+
         this.setState({
-          transactions: json.transactions
+          transactions: json.transactions,
+          currentMonthTransactions: currentMonthTransactions
         })
       })
-  }
-
-  componentDidMount() {
-    this.fetchTransactions()
   }
 
   addTransaction = (transactionObject) => {
@@ -41,6 +51,15 @@ export default class UserHome extends Component {
     let copyOfTransactions = [...this.state.transactions]
     let index = this.state.transactions.indexOf(transactionObject)
     copyOfTransactions.splice(index, 1)
+    this.setState({
+      transactions: copyOfTransactions
+    })
+  }
+
+  handleTransactionArrayUpdate = (updateObject, transactionObject) => {
+    let copyOfTransactions = [...this.state.transactions]
+    let index = copyOfTransactions.indexOf(transactionObject)
+    copyOfTransactions.splice(index, 1, updateObject)
     this.setState({
       transactions: copyOfTransactions
     })
@@ -75,21 +94,17 @@ export default class UserHome extends Component {
               userObject={currentUserObject}
               addTransaction={this.addTransaction}
               handleDelete={this.handleDelete}
+              handleTransactionArrayUpdate={this.handleTransactionArrayUpdate}
             />
           )
         }} />
 
         <Route path='/users/:id' render={props => {
           let userId = props.match.params.id
-          let userTransactions;
           let currentUserObject;
 
           if (this.state.transactions) {
             currentUserObject = this.state.transactions.find(transactionObject => transactionObject.user.id === parseInt(userId)).user
-          }
-
-          if (this.state.transactions) {
-            userTransactions = this.state.transactions.filter(transactionObject => (transactionObject.user.id === parseInt(userId)))
           }
 
           return (
@@ -100,7 +115,7 @@ export default class UserHome extends Component {
 
             <Summary />
               <CategoryContainer
-                transactions={userTransactions}
+                transactions={this.state.currentMonthTransactions}
                 userObject={currentUserObject}
               />
             </div>

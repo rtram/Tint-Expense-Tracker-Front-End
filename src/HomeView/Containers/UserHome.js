@@ -68,9 +68,14 @@ export default class UserHome extends Component {
           })
           let lastMonthTransactionsAmt = lastMonthTransactions.map(transaction => transaction.amount)
 
-          let reducer = (accumulator, currentValue) => accumulator + currentValue
-          lastMonth = lastMonthTransactionsAmt.reduce(reducer)
-          lastMonth = Math.floor(lastMonth * 100) / 100
+          if (lastMonthTransactionsAmt.length > 0) {
+            let reducer = (accumulator, currentValue) => accumulator + currentValue
+            lastMonth = lastMonthTransactionsAmt.reduce(reducer)
+            lastMonth = Math.floor(lastMonth * 100) / 100
+          } else {
+            lastMonth = 0.00
+          }
+
         }
 
         // LAST LAST MONTH TOTAL
@@ -82,9 +87,13 @@ export default class UserHome extends Component {
           })
           let lastLastMonthTransactionsAmt = lastLastMonthTransactions.map(transaction => transaction.amount)
 
-          let reducer = (accumulator, currentValue) => accumulator + currentValue
-          lastLastMonth = lastLastMonthTransactionsAmt.reduce(reducer)
-          lastLastMonth = Math.floor(lastLastMonth * 100) / 100
+          if (lastLastMonthTransactionsAmt.length > 0) {
+            let reducer = (accumulator, currentValue) => accumulator + currentValue
+            lastLastMonth = lastLastMonthTransactionsAmt.reduce(reducer)
+            lastLastMonth = Math.floor(lastLastMonth * 100) / 100
+          } else (
+            lastLastMonth = 0.00
+          )
         }
 
         threeMonthData = [lastLastMonth, lastMonth, currentMonth]

@@ -32,12 +32,67 @@ export default class UserHome extends Component {
           let presentMonth = new Date().getMonth() + 1
           return presentMonth === transactionMonthInt
         })
-// =============================================================================
 
         this.setState({
           transactions: json.transactions,
           currentMonthTransactions: currentMonthTransactions
         })
+// =============================================================================
+
+        let threeMonthData = []
+        let currentMonth;
+        let lastMonth;
+        let lastLastMonth;
+
+
+        // CURRENT MONTH TOTAL
+        if (this.state.transactions) {
+          let currentMonthTransactions = this.state.transactions.filter(transactionObject => {
+            let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+            let currentMonth = new Date().getMonth() + 1
+            return currentMonth === transactionMonthInt
+          })
+          let currentMonthTransactionsAmt = currentMonthTransactions.map(transaction => transaction.amount)
+
+          let reducer = (accumulator, currentValue) => accumulator + currentValue
+          currentMonth = currentMonthTransactionsAmt.reduce(reducer)
+          currentMonth = Math.floor(currentMonth * 100) / 100
+        }
+
+        // LAST MONTH TOTAL
+        if (this.state.transactions) {
+          let lastMonthTransactions = this.state.transactions.filter(transactionObject => {
+            let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+            let lastMonth = new Date().getMonth()
+            return lastMonth === transactionMonthInt
+          })
+          let lastMonthTransactionsAmt = lastMonthTransactions.map(transaction => transaction.amount)
+
+          let reducer = (accumulator, currentValue) => accumulator + currentValue
+          lastMonth = lastMonthTransactionsAmt.reduce(reducer)
+          lastMonth = Math.floor(lastMonth * 100) / 100
+        }
+
+        // LAST LAST MONTH TOTAL
+        if (this.state.transactions) {
+          let lastLastMonthTransactions = this.state.transactions.filter(transactionObject => {
+            let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+            let lastLastMonth = new Date().getMonth() - 1
+            return lastLastMonth === transactionMonthInt
+          })
+          let lastLastMonthTransactionsAmt = lastLastMonthTransactions.map(transaction => transaction.amount)
+
+          let reducer = (accumulator, currentValue) => accumulator + currentValue
+          lastLastMonth = lastLastMonthTransactionsAmt.reduce(reducer)
+          lastLastMonth = Math.floor(lastLastMonth * 100) / 100
+        }
+
+        threeMonthData = [lastLastMonth, lastMonth, currentMonth]
+
+        this.setState({
+          threeMonthData: threeMonthData
+        })
+
       })
   }
 
@@ -51,7 +106,6 @@ export default class UserHome extends Component {
       return presentMonth === transactionMonthInt
     })
 // =============================================================================
-
     this.setState({
       transactions: allTransactions,
       currentMonthTransactions: currentMonthTransactions
@@ -112,58 +166,6 @@ export default class UserHome extends Component {
       return lastThreeMonths
     }
 
-    let dataGetter = () => {
-      let threeMonthData = []
-      let currentMonth;
-      let lastMonth;
-      let lastLastMonth;
-
-      // CURRENT MONTH TOTAL
-      if (this.state.transactions) {
-        let currentMonthTransactions = this.state.transactions.filter(transactionObject => {
-          let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
-          let currentMonth = new Date().getMonth() + 1
-          return currentMonth === transactionMonthInt
-        })
-        let currentMonthTransactionsAmt = currentMonthTransactions.map(transaction => transaction.amount)
-
-        let reducer = (accumulator, currentValue) => accumulator + currentValue
-        currentMonth = currentMonthTransactionsAmt.reduce(reducer)
-        currentMonth = Math.floor(currentMonth * 100) / 100
-      }
-
-      // LAST MONTH TOTAL
-      if (this.state.transactions) {
-        let lastMonthTransactions = this.state.transactions.filter(transactionObject => {
-          let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
-          let lastMonth = new Date().getMonth()
-          return lastMonth === transactionMonthInt
-        })
-        let lastMonthTransactionsAmt = lastMonthTransactions.map(transaction => transaction.amount)
-
-        let reducer = (accumulator, currentValue) => accumulator + currentValue
-        lastMonth = lastMonthTransactionsAmt.reduce(reducer)
-        lastMonth = Math.floor(lastMonth * 100) / 100
-      }
-
-      // LAST LAST MONTH TOTAL
-      if (this.state.transactions) {
-        let lastLastMonthTransactions = this.state.transactions.filter(transactionObject => {
-          let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
-          let lastLastMonth = new Date().getMonth() - 1
-          return lastLastMonth === transactionMonthInt
-        })
-        let lastLastMonthTransactionsAmt = lastLastMonthTransactions.map(transaction => transaction.amount)
-
-        let reducer = (accumulator, currentValue) => accumulator + currentValue
-        lastLastMonth = lastLastMonthTransactionsAmt.reduce(reducer)
-        lastLastMonth = Math.floor(lastLastMonth * 100) / 100
-      }
-
-      threeMonthData = [lastLastMonth, lastMonth, currentMonth]
-      return threeMonthData
-    }
-
 //==============================================================================
 
     return (
@@ -220,7 +222,7 @@ export default class UserHome extends Component {
             />
             <Chart
               label={labelGetter()}
-              data={dataGetter()}
+              data={this.state.threeMonthData}
             />
             <CategoryContainer
               transactions={this.state.currentMonthTransactions}

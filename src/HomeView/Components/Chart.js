@@ -9,10 +9,12 @@ export default class Chart extends Component {
     }
   }
 
-  componentDidMount() {
-    console.log(this.props.label)
-    console.log(this.props.data)
-    this.setState({
+
+
+
+  render() {
+
+    let dataObject = {
         type: 'bar',
         data: {
             labels: this.props.label,
@@ -42,14 +44,12 @@ export default class Chart extends Component {
                 }]
             }
         }
-    })
-  }
+    }
 
-  render() {
     return (
       <div className="chart">
         <Bar
-          data={this.state.data}
+          data={dataObject.data}
           width={500}
           height={500}
           options={{

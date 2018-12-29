@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import CategoryBar from "../Components/CategoryBar"
-import CategoryContainerChart from "../Components/CategoryContainerChart"
+import CategoryBarChart from "../Components/CategoryContainerChart"
 
 export default class CategoryContainer extends Component {
 
@@ -44,7 +44,7 @@ export default class CategoryContainer extends Component {
         How is each <strong>Spending Category</strong> looking in <strong>{this.props.currentMonth}</strong>?
 
         {this.props.transactions ?
-          <CategoryContainerChart
+          <CategoryBarChart
             categoryLabels={categoryLabels}
             categoryTotals={categoryTotals}
             currentMonth={this.props.currentMonth}

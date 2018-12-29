@@ -6,30 +6,20 @@ export default class Chart extends Component {
   render() {
 
     let dataObject = {
-        type: 'bar',
-        data: {
-            labels: this.props.label,
-            datasets: [{
-                label: 'Money Spent',
-                data: this.props.data,
-                backgroundColor: [
-                    'rgba(210, 245, 60, .2)',
-                ],
-                borderColor: [
-                    'lime',
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
+      data: {
+          labels: this.props.label,
+          datasets: [{
+              label: 'Money Spent',
+              data: this.props.data,
+              backgroundColor: [
+                  'rgba(210, 245, 60, .2)',
+              ],
+              borderColor: [
+                  'lime',
+              ],
+              borderWidth: 1
+          }]
+      },
     }
 
     return (

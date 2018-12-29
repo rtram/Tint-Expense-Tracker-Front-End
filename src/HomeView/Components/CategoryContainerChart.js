@@ -1,7 +1,21 @@
 import React, { Component } from "react"
-import {Bar} from 'react-chartjs-2'
+import {Button} from "react-bootstrap"
+import {Bar, Doughnut} from 'react-chartjs-2'
 
-export default class CategoryContainerChart extends Component {
+export default class CategoryBarChart extends Component {
+
+  constructor() {
+    super()
+    this.state={
+      bar: true
+    }
+  }
+
+  handleToggle = () => {
+    this.setState({
+      bar: !this.state.bar
+    })
+  }
 
   render() {
 
@@ -41,23 +55,49 @@ export default class CategoryContainerChart extends Component {
     }
 
     return (
-      <div className="chart">
-        <Bar
-          data={dataObject.data}
-          width={750}
-          height={500}
-          options={{
-            title: {
-              display: true,
-              text: `Spending Categories in ${this.props.currentMonth}`,
-              fontsize: 200
-            },
-            legend: {
-              display: false,
-              position: "bottom"
-            }
-          }}
-        />
+      <div>
+
+        {this.state.bar ?
+          <Bar
+            data={dataObject.data}
+            width={750}
+            height={500}
+            options={{
+              title: {
+                display: true,
+                text: `Spending Categories in ${this.props.currentMonth}`,
+                fontsize: 200
+              },
+              legend: {
+                display: false,
+                position: "bottom"
+              }
+            }}
+          />
+          :
+          <Doughnut
+            data={dataObject.data}
+            width={750}
+            height={500}
+            options={{
+              title: {
+                display: true,
+                text: `Spending Categories in ${this.props.currentMonth}`,
+                fontsize: 200
+              },
+              legend: {
+                display: true,
+                position: "bottom"
+              }
+            }}
+          />
+        }
+
+        {this.state.bar ?
+          <Button onClick={this.handleToggle}>Switch to Pie Display</Button>
+          :
+          <Button onClick={this.handleToggle}>Switch to Bar Display</Button>
+        }
       </div>
     )
   }

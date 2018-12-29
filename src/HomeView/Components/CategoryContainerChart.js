@@ -44,7 +44,7 @@ export default class CategoryContainerChart extends Component {
       <div className="chart">
         <Bar
           data={dataObject.data}
-          width={500}
+          width={750}
           height={500}
           options={{
             title: {

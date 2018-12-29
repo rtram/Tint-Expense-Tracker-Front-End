@@ -1,16 +1,7 @@
 import React, { Component } from "react"
-import {Bar} from 'react-chartjs-2'
+import {Line} from 'react-chartjs-2'
 
 export default class Chart extends Component {
-  constructor() {
-    super()
-    this.state = {
-
-    }
-  }
-
-
-
 
   render() {
 
@@ -48,7 +39,7 @@ export default class Chart extends Component {
 
     return (
       <div className="chart">
-        <Bar
+        <Line
           data={dataObject.data}
           width={500}
           height={500}
@@ -60,7 +51,7 @@ export default class Chart extends Component {
             },
             legend: {
               display: true,
-              position: "right"
+              position: "bottom"
             }
           }}
         />

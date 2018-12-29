@@ -21,8 +21,6 @@ export default class Summary extends Component {
     return (
       <div>
         You have spent <strong>${summaryTotal}</strong> in <strong>{this.props.currentMonth}</strong>!
-
-
       </div>
     )
   }

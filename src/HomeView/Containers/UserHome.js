@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import Summary from "./Summary"
 import CategoryContainer from "./CategoryContainer"
 import CategoryDetails from "../../CategoryView/Containers/CategoryDetails"
-import Chart from "../Components/Chart.js"
+import UserHomeChart from "../Components/UserHomeChart.js"
 import {Route, Switch} from 'react-router-dom'
 import {Jumbotron} from "react-bootstrap"
 
@@ -126,12 +126,23 @@ export default class UserHome extends Component {
       method: "DELETE"
     })
 
-    let copyOfTransactions = [...this.state.transactions]
-    let index = this.state.transactions.indexOf(transactionObject)
-    copyOfTransactions.splice(index, 1)
+    // DELETING FROM THIS.STATE.TRANSACTIONS
+    let copyOfAllTransactions = [...this.state.transactions]
+    let indexOfAllTransactions = this.state.transactions.indexOf(transactionObject)
+    copyOfAllTransactions.splice(indexOfAllTransactions, 1)
     this.setState({
-      transactions: copyOfTransactions
+      transactions: copyOfAllTransactions
     })
+
+    // DELETING FROM THIS.STATE.CURRENTMONTHTRANSACTIONS
+    let copyOfCurrentMonthTransactions = [...this.state.currentMonthTransactions]
+    let indexOfCurrentMonthTransactions = this.state.currentMonthTransactions.indexOf(transactionObject)
+    copyOfCurrentMonthTransactions.splice(indexOfCurrentMonthTransactions, 1)
+    this.setState({
+      currentMonthTransactions: copyOfCurrentMonthTransactions
+    })
+
+
   }
 
   handleTransactionArrayUpdate = (updateObject, transactionObject) => {
@@ -229,7 +240,7 @@ export default class UserHome extends Component {
               transactions={this.state.currentMonthTransactions}
               currentMonth={currentMonth}
             />
-            <Chart
+            <UserHomeChart
               label={labelGetter()}
               data={this.state.threeMonthData}
             />

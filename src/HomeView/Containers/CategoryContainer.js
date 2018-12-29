@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import CategoryBar from "../Components/CategoryBar"
+import CategoryContainerChart from "../Components/CategoryContainerChart"
 
 export default class CategoryContainer extends Component {
 
@@ -27,9 +28,31 @@ export default class CategoryContainer extends Component {
       }
     }
 
+    let categoryLabels = []
+    let categoryTotals = []
+
+    if (this.props.transactions) {
+      categoryLabels = categoryArrTotals.map(categoryObject => categoryObject.name)
+
+      categoryTotals = categoryArrTotals.map(categoryObject => categoryObject.total)
+
+      console.log(categoryLabels)
+    }
+
     return (
       <div>
-        How is each Spending Category Looking?
+        How is each <strong>Spending Category</strong> looking in <strong>{this.props.currentMonth}</strong>?
+
+        {this.props.transactions ?
+          <CategoryContainerChart
+            categoryLabels={categoryLabels}
+            categoryTotals={categoryTotals}
+            currentMonth={this.props.currentMonth}
+          /> :
+          null
+        }
+
+
         {this.props.transactions ? categoryArrTotals.map(categoryTotalObject =>
          <CategoryBar
           key={categoryTotalObject.id}
@@ -39,6 +62,7 @@ export default class CategoryContainer extends Component {
           userObject={this.props.userObject}
         />) : null
         }
+
       </div>
     )
   }

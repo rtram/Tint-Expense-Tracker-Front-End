@@ -35,8 +35,6 @@ export default class CategoryContainer extends Component {
       categoryLabels = categoryArrTotals.map(categoryObject => categoryObject.name)
 
       categoryTotals = categoryArrTotals.map(categoryObject => categoryObject.total)
-
-      console.log(categoryLabels)
     }
 
     return (

@@ -12,10 +12,10 @@ export default class Chart extends Component {
               label: 'Money Spent',
               data: this.props.data,
               backgroundColor: [
-                  'rgba(210, 245, 60, .2)',
+                  'rgba(60, 180, 75, .25)',
               ],
               borderColor: [
-                  'lime',
+                  'green',
               ],
               borderWidth: 1
           }]

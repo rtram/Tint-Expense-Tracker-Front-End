@@ -17,6 +17,12 @@ export default class CategoryDetails extends Component {
       categoryTotal = Math.floor(categoryTotal * 100) / 100
     }
 
+// SORT BY RECENT TO OLDEST
+    let ascendingTransactions;
+    if (this.props.transactions) {
+      ascendingTransactions = this.props.transactions.sort((a, b) => new Date(a.date) - new Date (b.date))
+    }
+
     return (
       <div>
 
@@ -42,7 +48,7 @@ export default class CategoryDetails extends Component {
             </tr>
           </thead>
           <tbody>
-          {this.props.transactions ? this.props.transactions.map(transaction => (
+          {this.props.transactions ? ascendingTransactions.map(transaction => (
             <Transaction key={transaction.id} transactionObject={transaction} handleDelete={this.props.handleDelete} handleTransactionArrayUpdate={this.props.handleTransactionArrayUpdate}/>)) : null
           }
           </tbody>

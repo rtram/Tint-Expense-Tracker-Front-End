@@ -100,7 +100,7 @@ export default class ExpenseForm extends Component {
                     onChange={this.handleChange}
                   />
                 </FormGroup>
-                <Button onClick={this.handleSubmit}><strong>Submit</strong></Button>
+                <Button id="hvr-fade" onClick={this.handleSubmit}><strong>Submit</strong></Button>
               </Form>
             </Col>
             <Col md={6}></Col>

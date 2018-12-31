@@ -104,6 +104,7 @@ export default class Transactions extends Component {
         {!this.state.show ?
           <td>
             <Button
+              id="hvr-fade"
               ref={button => {
                 this.target = button;
               }}
@@ -114,6 +115,7 @@ export default class Transactions extends Component {
           </td> :
           <td>
             <Button
+              id="hvr-fade"
               ref={button => {
                 this.target = button;
               }}
@@ -125,6 +127,7 @@ export default class Transactions extends Component {
               Save
             </Button>
             <Button
+              id="hvr-fade-red"
               ref={button => {
                 this.target = button;
               }}

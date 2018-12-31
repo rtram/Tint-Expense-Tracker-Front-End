@@ -97,9 +97,17 @@ export default class CategoryBarChart extends Component {
                 />
               }
               {this.state.bar ?
-                <Button onClick={this.handleToggle}>Switch to Pie Display</Button>
+                <Button
+                  id="hvr-fade"
+                  onClick={this.handleToggle}>
+                    Switch to Pie Display
+                </Button>
                 :
-                <Button onClick={this.handleToggle}>Switch to Bar Display</Button>
+                <Button
+                  id="hvr-fade"
+                  onClick={this.handleToggle}>
+                    Switch to Bar Display
+                </Button>
               }
             </div>
           </Col>

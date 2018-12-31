@@ -21,7 +21,7 @@ export default class Summary extends Component {
     }
     return (
       <div>
-        <h3><strong>Below is Your Personal Expense Summary</strong></h3>
+        <h1><strong>Your Personal Spending Summary</strong></h1>
         <br/>
         You have spent <strong>${summaryTotal}</strong> in <strong>{this.props.currentMonth}</strong>!
       </div>

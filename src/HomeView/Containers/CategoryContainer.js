@@ -45,7 +45,7 @@ export default class CategoryContainer extends Component {
 
     return (
       <div>
-        How is your <strong>Spending Categories</strong> looking in <strong>{this.props.currentMonth}</strong>?
+        How are your <strong>Spending Categories</strong> looking in <strong>{this.props.currentMonth}</strong>?
 
         {this.props.transactions ?
           <CategoryBarChart

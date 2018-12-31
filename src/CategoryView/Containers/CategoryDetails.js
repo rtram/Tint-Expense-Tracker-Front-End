@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import './CategoryDetails.css';
 import Transaction from "../Components/Transaction"
 import ExpenseForm from "../Components/ExpenseForm"
 import {Link} from 'react-router-dom'
@@ -37,7 +38,7 @@ export default class CategoryDetails extends Component {
             {this.props.userObject ?
               <Link to={`/users/${this.props.userObject.id}/`}>
                 <Button bsStyle="primary" block>
-                  Go Back
+                  <strong>Go Back to User Home</strong>
                 </Button>
               </Link>: null }
           </Col>
@@ -52,41 +53,72 @@ export default class CategoryDetails extends Component {
 
       <br/>
 
-      <strong>{this.props.currentMonth} Transactions</strong>
+      <strong>{this.props.currentMonth}</strong>
 
       <br/>
       <br/>
-        <Table bordered condensed hover>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Description</th>
-              <th>Category</th>
-              <th>Amount</th>
-              <th>Edit</th>
-            </tr>
-          </thead>
-          <tbody>
-          {categoryTotal > 0 ? ascendingTransactions.map(transaction => (
+      <Grid>
+        <Row>
+          <Col md={2}>
+          </Col>
 
-              <Transaction key={transaction.id} transactionObject={transaction} handleDelete={this.props.handleDelete} handleTransactionArrayUpdate={this.props.handleTransactionArrayUpdate}/>)) : null
-          }
-          </tbody>
-        </Table>
+          <Col md={8}>
+          <Table bordered condensed hover>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+            {categoryTotal > 0 ? ascendingTransactions.map(transaction => (
 
-        <ExpenseForm
-          selectedCategory={this.props.selectedCategory} transactions={this.props.transactions}
-          userObject={this.props.userObject}
-          addTransaction={this.props.addTransaction}
-        />
+                <Transaction key={transaction.id} transactionObject={transaction} handleDelete={this.props.handleDelete} handleTransactionArrayUpdate={this.props.handleTransactionArrayUpdate}/>)) : null
+            }
+            </tbody>
+          </Table>
+          </Col>
 
-        <Table bordered condensed hover>
-          <thead>
-            {this.props.selectedCategory ? <th>{this.props.selectedCategory.name}</th>: null }
-            <th>Total</th>
-            <th>{categoryTotal}</th>
-          </thead>
-        </Table>
+          <Col md={2}>
+          </Col>
+        </Row>
+
+
+
+        <Row>
+          <Col md={2}>
+          </Col>
+          <Col md={8}>
+          <ExpenseForm
+            selectedCategory={this.props.selectedCategory} transactions={this.props.transactions}
+            userObject={this.props.userObject}
+            addTransaction={this.props.addTransaction}
+          />
+          </Col>
+          <Col md={2}>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col md={2}>
+          </Col>
+          <Col md={8}>
+          <Table bordered condensed hover>
+            <thead>
+              {this.props.selectedCategory ? <th>{this.props.selectedCategory.name}</th>: null }
+              <th>Total</th>
+              <th>{categoryTotal}</th>
+            </thead>
+          </Table>
+          </Col>
+          <Col md={2}>
+          </Col>
+        </Row>
+
+        </Grid>
       </div>
     )
   }

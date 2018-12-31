@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import '../Containers/CategoryDetails.css';
 import { FormControl, Button} from "react-bootstrap"
 
 export default class Transactions extends Component {
@@ -56,7 +57,7 @@ export default class Transactions extends Component {
 
   render() {
     return (
-      <tr>
+      <tr id="table">
         {!this.state.show ?
         <td>{this.state.date}</td> :
         <td>
@@ -108,7 +109,7 @@ export default class Transactions extends Component {
               }}
               onClick={this.handleToggle}
             >
-              <img alt="" src="https://img.icons8.com/color/48/000000/pencil.png" />
+              ...
             </Button>
           </td> :
           <td>

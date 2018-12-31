@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import CategoryBar from "../Components/CategoryBar"
 import CategoryBarChart from "../Components/CategoryContainerChart"
+import {Grid, Row, Col} from "react-bootstrap"
 
 export default class CategoryContainer extends Component {
 
@@ -55,16 +56,34 @@ export default class CategoryContainer extends Component {
           null
         }
 
-
-        {this.props.transactions ? categoryArrTotals.map(categoryTotalObject =>
-         <CategoryBar
-          key={categoryTotalObject.id}
-          categoryId={categoryTotalObject.id}
-          categoryName={categoryTotalObject.name}
-          categoryTotal={categoryTotalObject.total}
-          userObject={this.props.userObject}
-        />) : null
-        }
+        <div>
+          <Grid>
+            <Row>
+              <Col md={6}>
+              {this.props.transactions ? categoryArrTotals.slice(0,5).map(categoryTotalObject =>
+               <CategoryBar
+                key={categoryTotalObject.id}
+                categoryId={categoryTotalObject.id}
+                categoryName={categoryTotalObject.name}
+                categoryTotal={categoryTotalObject.total}
+                userObject={this.props.userObject}
+              />) : null
+              }
+              </Col>
+              <Col md={6}>
+              {this.props.transactions ? categoryArrTotals.slice(5,11).map(categoryTotalObject =>
+               <CategoryBar
+                key={categoryTotalObject.id}
+                categoryId={categoryTotalObject.id}
+                categoryName={categoryTotalObject.name}
+                categoryTotal={categoryTotalObject.total}
+                userObject={this.props.userObject}
+              />) : null
+              }
+              </Col>
+            </Row>
+          </Grid>
+        </div>
 
       </div>
     )

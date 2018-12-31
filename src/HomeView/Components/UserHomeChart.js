@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import {Line} from 'react-chartjs-2'
+import {Grid, Row, Col} from "react-bootstrap"
 
 export default class Chart extends Component {
 
@@ -23,23 +24,33 @@ export default class Chart extends Component {
     }
 
     return (
-      <div className="chart">
-        <Line
-          data={dataObject.data}
-          width={750}
-          height={500}
-          options={{
-            title: {
-              display: true,
-              text: "Last Three Months's Spending",
-              fontsize: 100
-            },
-            legend: {
-              display: true,
-              position: "bottom"
-            }
-          }}
-        />
+      <div>
+        <Grid>
+          <Row>
+            <Col md={2}>
+            </Col>
+            <Col md={8}>
+              <Line
+                data={dataObject.data}
+                width={750}
+                height={500}
+                options={{
+                  title: {
+                    display: true,
+                    text: "Last Three Months's Spending",
+                    fontsize: 100
+                  },
+                  legend: {
+                    display: true,
+                    position: "bottom"
+                  }
+                }}
+              />
+          </Col>
+          <Col md={2}>
+          </Col>
+        </Row>
+      </Grid>
       </div>
     )
   }

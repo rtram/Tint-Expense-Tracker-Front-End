@@ -92,6 +92,9 @@ export default class CategoryContainer extends Component {
           </Grid>
         </div>
 
+        <br/>
+        <br/>
+        <br/>
       </div>
     )
   }

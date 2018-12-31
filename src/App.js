@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import UserHome from "./HomeView/Containers/UserHome"
+import Footer from "./HomeView/Containers/Footer"
 import {Route} from 'react-router-dom'
 
 class App extends Component {
@@ -15,7 +16,9 @@ class App extends Component {
             let userId = props.match.params.id
             return <UserHome userId={userId}/>
           }} />
-
+        <footer className="App-footer">
+          <Footer />
+        </footer>
       </div>
     );
   }

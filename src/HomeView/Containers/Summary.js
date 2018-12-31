@@ -17,6 +17,7 @@ export default class Summary extends Component {
       let reducer = (accumulator, currentValue) => accumulator + currentValue
       summaryTotal = summaryTotal.reduce(reducer)
       summaryTotal = Math.floor(summaryTotal * 100) / 100
+
     }
     return (
       <div>

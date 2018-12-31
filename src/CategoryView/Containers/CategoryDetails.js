@@ -12,9 +12,11 @@ export default class CategoryDetails extends Component {
     if (this.props.transactions) {
       categoryTotal = this.props.transactions.map(transaction => transaction.amount)
 
-      let reducer = (accumulator, currentValue) => accumulator + currentValue
-      categoryTotal = categoryTotal.reduce(reducer)
-      categoryTotal = Math.floor(categoryTotal * 100) / 100
+      if (categoryTotal.length > 0) {
+        let reducer = (accumulator, currentValue) => accumulator + currentValue
+        categoryTotal = categoryTotal.reduce(reducer)
+        categoryTotal = Math.floor(categoryTotal * 100) / 100
+      }
     }
 
 // SORT BY RECENT TO OLDEST
@@ -36,7 +38,7 @@ export default class CategoryDetails extends Component {
 
       <strong>{this.props.currentMonth} Transactions</strong>
 
-      {this.props.selectedCategory ? this.props.selectedCategory.name : null}
+      {this.props.transactions? this.props.selectedCategory.name : null}
         <Table bordered condensed hover>
           <thead>
             <tr>
@@ -48,8 +50,9 @@ export default class CategoryDetails extends Component {
             </tr>
           </thead>
           <tbody>
-          {this.props.transactions ? ascendingTransactions.map(transaction => (
-            <Transaction key={transaction.id} transactionObject={transaction} handleDelete={this.props.handleDelete} handleTransactionArrayUpdate={this.props.handleTransactionArrayUpdate}/>)) : null
+          {categoryTotal > 0 ? ascendingTransactions.map(transaction => (
+
+              <Transaction key={transaction.id} transactionObject={transaction} handleDelete={this.props.handleDelete} handleTransactionArrayUpdate={this.props.handleTransactionArrayUpdate}/>)) : null
           }
           </tbody>
         </Table>

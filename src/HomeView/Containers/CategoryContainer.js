@@ -13,13 +13,18 @@ export default class CategoryContainer extends Component {
 
         let filteredCategoryTransactions = this.props.transactions.filter(transactionObject => transactionObject.category.id === i)
 
-        categoryName = filteredCategoryTransactions[0].category.name
+        categoryName =
+        ["Auto & Transport", "Bills & Utilities", "Education", "Entertainment", "Food & Dining", "Gifts & Donations", "Health & Fitness", "Miscellaneous", "Shopping", "Travel"][i - 1]
 
         let filteredCategoryTotal = filteredCategoryTransactions.map(transactionObject => transactionObject.amount)
 
-        let reducer = (accumulator, currentValue) => accumulator + currentValue
-        filteredCategoryTotal = filteredCategoryTotal.reduce(reducer)
-        filteredCategoryTotal = Math.floor(filteredCategoryTotal * 100) / 100
+        if (filteredCategoryTotal.length > 0) {
+          let reducer = (accumulator, currentValue) => accumulator + currentValue
+          filteredCategoryTotal = filteredCategoryTotal.reduce(reducer)
+          filteredCategoryTotal = Math.floor(filteredCategoryTotal * 100) / 100
+        } else {
+          filteredCategoryTotal = 0
+        }
 
         categoryArrTotals.push({
           id: i,

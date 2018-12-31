@@ -29,8 +29,11 @@ export default class UserHome extends Component {
 // FILTERS CURRENT MONTH TRANSACTIONS ==========================================
         let currentMonthTransactions = json.transactions.filter(transactionObject => {
           let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+          let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
           let presentMonth = new Date().getMonth() + 1
-          return presentMonth === transactionMonthInt
+          let presentYear = new Date().getFullYear()
+
+          return (presentMonth === transactionMonthInt) && (presentYear === transactionYearInt)
         })
 
         this.setState({
@@ -49,8 +52,10 @@ export default class UserHome extends Component {
         if (this.state.transactions) {
           let currentMonthTransactions = this.state.transactions.filter(transactionObject => {
             let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+            let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
             let currentMonth = new Date().getMonth() + 1
-            return currentMonth === transactionMonthInt
+            let presentYear = new Date().getFullYear()
+            return (currentMonth === transactionMonthInt) && (presentYear === transactionYearInt)
           })
           let currentMonthTransactionsAmt = currentMonthTransactions.map(transaction => transaction.amount)
 
@@ -63,8 +68,10 @@ export default class UserHome extends Component {
         if (this.state.transactions) {
           let lastMonthTransactions = this.state.transactions.filter(transactionObject => {
             let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+            let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
             let lastMonth = new Date().getMonth()
-            return lastMonth === transactionMonthInt
+            let presentYear = new Date().getFullYear()
+            return (lastMonth === transactionMonthInt) && (presentYear === transactionYearInt)
           })
           let lastMonthTransactionsAmt = lastMonthTransactions.map(transaction => transaction.amount)
 
@@ -82,8 +89,10 @@ export default class UserHome extends Component {
         if (this.state.transactions) {
           let lastLastMonthTransactions = this.state.transactions.filter(transactionObject => {
             let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+            let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
             let lastLastMonth = new Date().getMonth() - 1
-            return lastLastMonth === transactionMonthInt
+            let presentYear = new Date().getFullYear()
+            return (lastLastMonth === transactionMonthInt) && (presentYear === transactionYearInt)
           })
           let lastLastMonthTransactionsAmt = lastLastMonthTransactions.map(transaction => transaction.amount)
 
@@ -111,8 +120,10 @@ export default class UserHome extends Component {
 // FILTERS CURRENT MONTH TRANSACTIONS ==========================================
     let currentMonthTransactions = allTransactions.filter(transactionObject => {
       let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+      let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
       let presentMonth = new Date().getMonth() + 1
-      return presentMonth === transactionMonthInt
+      let presentYear = new Date().getFullYear()
+      return (presentMonth === transactionMonthInt) && (presentYear === transactionYearInt)
     })
 // =============================================================================
     this.setState({
@@ -153,8 +164,10 @@ export default class UserHome extends Component {
 // FILTERS CURRENT MONTH TRANSACTIONS ==========================================
     let currentMonthTransactions = copyOfTransactions.filter(transactionObject => {
       let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+      let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
       let presentMonth = new Date().getMonth() + 1
-      return presentMonth === transactionMonthInt
+      let presentYear = new Date().getFullYear()
+      return (presentMonth === transactionMonthInt) && (presentYear === transactionYearInt)
     })
 // =============================================================================
 

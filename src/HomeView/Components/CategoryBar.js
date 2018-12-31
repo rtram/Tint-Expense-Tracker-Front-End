@@ -9,7 +9,7 @@ export default class CategoryBar extends Component {
     return (
       <div >
         <Link to={`/users/${this.props.userObject.id}/${this.props.categoryId}`}>
-          <Button bsStyle="primary">
+          <Button bsStyle="primary" block>
             <div>
               <h3>{this.props.categoryName}</h3>
             </div>

@@ -45,7 +45,7 @@ export default class CategoryContainer extends Component {
 
     return (
       <div>
-        How is each <strong>Spending Category</strong> looking in <strong>{this.props.currentMonth}</strong>?
+        How is your <strong>Spending Categories</strong> looking in <strong>{this.props.currentMonth}</strong>?
 
         {this.props.transactions ?
           <CategoryBarChart
@@ -57,9 +57,14 @@ export default class CategoryContainer extends Component {
         }
 
         <div>
+          <strong>Categories</strong>
+          <br/>
           <Grid>
+            <br/>
             <Row>
-              <Col md={6}>
+              <Col md={3}>
+              </Col>
+              <Col md={3}>
               {this.props.transactions ? categoryArrTotals.slice(0,5).map(categoryTotalObject =>
                <CategoryBar
                 key={categoryTotalObject.id}
@@ -70,7 +75,7 @@ export default class CategoryContainer extends Component {
               />) : null
               }
               </Col>
-              <Col md={6}>
+              <Col md={3}>
               {this.props.transactions ? categoryArrTotals.slice(5,11).map(categoryTotalObject =>
                <CategoryBar
                 key={categoryTotalObject.id}
@@ -80,6 +85,8 @@ export default class CategoryContainer extends Component {
                 userObject={this.props.userObject}
               />) : null
               }
+              </Col>
+              <Col md={3}>
               </Col>
             </Row>
           </Grid>

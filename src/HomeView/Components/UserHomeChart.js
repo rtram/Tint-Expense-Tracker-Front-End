@@ -51,6 +51,8 @@ export default class Chart extends Component {
           </Col>
         </Row>
       </Grid>
+      <br/>
+      <br/>
       </div>
     )
   }

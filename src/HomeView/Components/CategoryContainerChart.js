@@ -106,6 +106,8 @@ export default class CategoryBarChart extends Component {
           <Col md={2}>
           </Col>
         </Row>
+        <br/>
+        <br/>
       </Grid>
     )
   }

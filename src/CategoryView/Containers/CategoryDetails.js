@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import Transaction from "../Components/Transaction"
 import ExpenseForm from "../Components/ExpenseForm"
 import {Link} from 'react-router-dom'
-import {Table, Button} from 'react-bootstrap'
+import {Table, Button, Grid, Row, Col} from 'react-bootstrap'
 
 export default class CategoryDetails extends Component {
 
@@ -28,17 +28,34 @@ export default class CategoryDetails extends Component {
     return (
       <div>
 
-      {this.props.userObject ?
-        <Link to={`/users/${this.props.userObject.id}/`}>
-          <Button bsStyle="primary">
-            Go Back
-          </Button>
-        </Link>: null }
+      <br/>
 
+      <Grid>
+        <Row>
+          <Col md={4}/>
+          <Col md={4}>
+            {this.props.userObject ?
+              <Link to={`/users/${this.props.userObject.id}/`}>
+                <Button bsStyle="primary" block>
+                  Go Back
+                </Button>
+              </Link>: null }
+          </Col>
+          <Col md={4}/>
+        </Row>
+      </Grid>
+
+      <br/>
+      <br/>
+
+      {this.props.transactions? this.props.selectedCategory.name : null}
+
+      <br/>
 
       <strong>{this.props.currentMonth} Transactions</strong>
 
-      {this.props.transactions? this.props.selectedCategory.name : null}
+      <br/>
+      <br/>
         <Table bordered condensed hover>
           <thead>
             <tr>

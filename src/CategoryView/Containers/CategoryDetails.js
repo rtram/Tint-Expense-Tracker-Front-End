@@ -110,7 +110,7 @@ export default class CategoryDetails extends Component {
             <thead>
               {this.props.selectedCategory ? <th>{this.props.selectedCategory.name}</th>: null }
               <th>Total</th>
-              <th>{categoryTotal}</th>
+              <th>${Number.isInteger(categoryTotal) ? categoryTotal + ".00" : categoryTotal}</th>
             </thead>
           </Table>
           </Col>

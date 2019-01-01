@@ -14,7 +14,7 @@ export default class CategoryBar extends Component {
               <h3>{this.props.categoryName}</h3>
             </div>
             <div>
-              ${this.props.categoryTotal}
+              ${Number.isInteger(this.props.categoryTotal) ? this.props.categoryTotal + ".00" : this.props.categoryTotal}
             </div>
           </Button>
         </Link>

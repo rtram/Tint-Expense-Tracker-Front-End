@@ -12,7 +12,8 @@ export default class UserHome extends Component {
     super()
     this.state = {
       transactions: null,
-      currentMonthTransactions: null
+      currentMonthTransactions: null,
+      threeMonthData: null
     }
   }
 
@@ -41,77 +42,98 @@ export default class UserHome extends Component {
           currentMonthTransactions: currentMonthTransactions
         })
 // =============================================================================
-
-        let threeMonthData = []
-        let currentMonth;
-        let lastMonth;
-        let lastLastMonth;
-
-
-        // CURRENT MONTH TOTAL
-        if (this.state.transactions) {
-          let currentMonthTransactions = this.state.transactions.filter(transactionObject => {
-            let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
-            let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
-            let currentMonth = new Date().getMonth() + 1
-            let presentYear = new Date().getFullYear()
-            return (currentMonth === transactionMonthInt) && (presentYear === transactionYearInt)
-          })
-          let currentMonthTransactionsAmt = currentMonthTransactions.map(transaction => transaction.amount)
-
-          let reducer = (accumulator, currentValue) => accumulator + currentValue
-          currentMonth = currentMonthTransactionsAmt.reduce(reducer)
-          currentMonth = Math.floor(currentMonth * 100) / 100
-        }
-
-        // LAST MONTH TOTAL
-        if (this.state.transactions) {
-          let lastMonthTransactions = this.state.transactions.filter(transactionObject => {
-            let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
-            let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
-            let lastMonth = new Date().getMonth()
-            let presentYear = new Date().getFullYear()
-            return (lastMonth === transactionMonthInt) && (presentYear === transactionYearInt)
-          })
-          let lastMonthTransactionsAmt = lastMonthTransactions.map(transaction => transaction.amount)
-
-          if (lastMonthTransactionsAmt.length > 0) {
-            let reducer = (accumulator, currentValue) => accumulator + currentValue
-            lastMonth = lastMonthTransactionsAmt.reduce(reducer)
-            lastMonth = Math.floor(lastMonth * 100) / 100
-          } else {
-            lastMonth = 0.00
-          }
-
-        }
-
-        // LAST LAST MONTH TOTAL
-        if (this.state.transactions) {
-          let lastLastMonthTransactions = this.state.transactions.filter(transactionObject => {
-            let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
-            let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
-            let lastLastMonth = new Date().getMonth() - 1
-            let presentYear = new Date().getFullYear()
-            return (lastLastMonth === transactionMonthInt) && (presentYear === transactionYearInt)
-          })
-          let lastLastMonthTransactionsAmt = lastLastMonthTransactions.map(transaction => transaction.amount)
-
-          if (lastLastMonthTransactionsAmt.length > 0) {
-            let reducer = (accumulator, currentValue) => accumulator + currentValue
-            lastLastMonth = lastLastMonthTransactionsAmt.reduce(reducer)
-            lastLastMonth = Math.floor(lastLastMonth * 100) / 100
-          } else (
-            lastLastMonth = 0.00
-          )
-        }
-
-        threeMonthData = [lastLastMonth, lastMonth, currentMonth]
-
-        this.setState({
-          threeMonthData: threeMonthData
-        })
-
+        this.setThreeMonthData()
       })
+  }
+
+  setThreeMonthData = () => {
+    let threeMonthData = []
+    let currentMonthTotal;
+    let lastMonthTotal;
+    let lastLastMonthTotal;
+
+
+    // CURRENT MONTH TOTAL
+    if (this.state.transactions) {
+      let currentMonthTransactions = this.state.transactions.filter(transactionObject => {
+        let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+        let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
+        let currentMonth = new Date().getMonth() + 1
+        let presentYear = new Date().getFullYear()
+        return (currentMonth === transactionMonthInt) && (presentYear === transactionYearInt)
+      })
+
+      let currentMonthTransactionsAmt = currentMonthTransactions.map(transaction => transaction.amount)
+
+      if (currentMonthTransactionsAmt.length > 0) {
+        let reducer = (accumulator, currentValue) => accumulator + currentValue
+        currentMonthTotal = currentMonthTransactionsAmt.reduce(reducer)
+        currentMonthTotal = Math.floor(currentMonthTotal * 100) / 100
+      }
+    }
+
+    // LAST MONTH TOTAL
+    if (this.state.transactions) {
+      let lastMonthTransactions = this.state.transactions.filter(transactionObject => {
+        let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+        let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
+        let currentMonth = new Date().getMonth() + 1
+
+        if (currentMonth === 1) {
+          let lastMonth = 12
+          let year = new Date().getFullYear() - 1
+          return (lastMonth === transactionMonthInt) && (year === transactionYearInt)
+        } else {
+          let lastMonth = new Date().getMonth()
+          let presentYear = new Date().getFullYear()
+          return (lastMonth === transactionMonthInt) && (presentYear === transactionYearInt)
+        }
+      })
+      let lastMonthTransactionsAmt = lastMonthTransactions.map(transaction => transaction.amount)
+
+      if (lastMonthTransactionsAmt.length > 0) {
+        let reducer = (accumulator, currentValue) => accumulator + currentValue
+        lastMonthTotal = lastMonthTransactionsAmt.reduce(reducer)
+        lastMonthTotal = Math.floor(lastMonthTotal * 100) / 100
+      } else {
+        lastMonthTotal = 0.00
+      }
+
+    }
+
+    // LAST LAST MONTH TOTAL
+    if (this.state.transactions) {
+      let lastLastMonthTransactions = this.state.transactions.filter(transactionObject => {
+        let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+        let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
+        let currentMonth = new Date().getMonth() + 1
+
+        if (currentMonth === 1) {
+          let lastLastMonth = 11
+          let year = new Date().getFullYear() - 1
+          return (lastLastMonth === transactionMonthInt) && (year === transactionYearInt)
+        } else {
+          let lastLastMonth = new Date().getMonth() - 1
+          let presentYear = new Date().getFullYear()
+          return (lastLastMonth === transactionMonthInt) && (presentYear === transactionYearInt)
+        }
+      })
+      let lastLastMonthTransactionsAmt = lastLastMonthTransactions.map(transaction => transaction.amount)
+
+      if (lastLastMonthTransactionsAmt.length > 0) {
+        let reducer = (accumulator, currentValue) => accumulator + currentValue
+        lastLastMonthTotal = lastLastMonthTransactionsAmt.reduce(reducer)
+        lastLastMonthTotal = Math.floor(lastLastMonthTotal * 100) / 100
+      } else (
+        lastLastMonthTotal = 0.00
+      )
+    }
+
+    threeMonthData = [lastLastMonthTotal, lastMonthTotal, currentMonthTotal]
+
+    this.setState({
+      threeMonthData: threeMonthData
+    })
   }
 
   addTransaction = (transactionObject) => {
@@ -125,11 +147,13 @@ export default class UserHome extends Component {
       let presentYear = new Date().getFullYear()
       return (presentMonth === transactionMonthInt) && (presentYear === transactionYearInt)
     })
-// =============================================================================
+//=============================================================================
     this.setState({
       transactions: allTransactions,
       currentMonthTransactions: currentMonthTransactions
-    })
+    },
+    this.setThreeMonthData
+    )
   }
 
   handleDelete = (transactionObject) => {
@@ -151,9 +175,8 @@ export default class UserHome extends Component {
     copyOfCurrentMonthTransactions.splice(indexOfCurrentMonthTransactions, 1)
     this.setState({
       currentMonthTransactions: copyOfCurrentMonthTransactions
-    })
-
-
+    }, this.setThreeMonthData
+    )
   }
 
   handleTransactionArrayUpdate = (updateObject, transactionObject) => {
@@ -174,7 +197,8 @@ export default class UserHome extends Component {
     this.setState({
       transactions: copyOfTransactions,
       currentMonthTransactions: currentMonthTransactions
-    })
+    }, this.setThreeMonthData
+    )
   }
 
   render() {
@@ -193,9 +217,19 @@ export default class UserHome extends Component {
     let labelGetter = () => {
       let lastThreeMonths = []
       let index = new Date().getMonth()
-      lastThreeMonths.push(months[index-2])
-      lastThreeMonths.push(months[index-1])
-      lastThreeMonths.push(months[index])
+      if (index === 0) {
+        lastThreeMonths.push(months[10])
+        lastThreeMonths.push(months[11])
+        lastThreeMonths.push(months[index])
+      } else if (index === 1) {
+        lastThreeMonths.push(months[11])
+        lastThreeMonths.push(months[0])
+        lastThreeMonths.push(months[index])
+      } else {
+        lastThreeMonths.push(months[index-2])
+        lastThreeMonths.push(months[index-1])
+        lastThreeMonths.push(months[index])
+      }
       return lastThreeMonths
     }
 

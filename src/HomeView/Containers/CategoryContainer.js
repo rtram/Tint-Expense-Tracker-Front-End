@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import CategoryBar from "../Components/CategoryBar"
-import CategoryBarChart from "../Components/CategoryContainerChart"
+import CategoryContainerChart from "../Components/CategoryContainerChart"
 import {Grid, Row, Col} from "react-bootstrap"
 
 export default class CategoryContainer extends Component {
@@ -45,10 +45,10 @@ export default class CategoryContainer extends Component {
 
     return (
       <div>
-        Here is where your money is going in <strong>{this.props.currentMonth}</strong>
+        Here is where your money went in <strong>{this.props.currentMonth}</strong>
 
         {this.props.transactions ?
-          <CategoryBarChart
+          <CategoryContainerChart
             categoryLabels={categoryLabels}
             categoryTotals={categoryTotals}
             currentMonth={this.props.currentMonth}

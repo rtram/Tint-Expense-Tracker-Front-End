@@ -41,7 +41,7 @@ export default class ExpenseForm extends Component {
     let jsonObject = {
         date: this.state.date,
         description: this.state.description,
-        amount: this.state.amount,
+        amount: parseInt(this.state.amount),
         category: categoryObject,
         user: userObject
     }

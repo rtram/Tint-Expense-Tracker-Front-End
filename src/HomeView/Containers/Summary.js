@@ -14,10 +14,11 @@ export default class Summary extends Component {
     if (this.props.transactions) {
       summaryTotal = this.props.transactions.map(transaction => transaction.amount)
 
-      let reducer = (accumulator, currentValue) => accumulator + currentValue
-      summaryTotal = summaryTotal.reduce(reducer)
-      summaryTotal = Math.floor(summaryTotal * 100) / 100
-
+      if (summaryTotal.length > 0) {
+        let reducer = (accumulator, currentValue) => accumulator + currentValue
+        summaryTotal = summaryTotal.reduce(reducer)
+        summaryTotal = Math.floor(summaryTotal * 100) / 100
+      }
     }
     return (
       <div>

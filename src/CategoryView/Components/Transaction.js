@@ -33,7 +33,7 @@ export default class Transactions extends Component {
       id: this.state.id,
       date: this.state.date,
       description: this.state.description,
-      amount: parseInt(this.state.amount),
+      amount: parseFloat(this.state.amount),
       category: this.props.transactionObject.category,
       user: this.props.transactionObject.user
     }
@@ -88,7 +88,7 @@ export default class Transactions extends Component {
         <td>{this.props.transactionObject.category.name}</td>
 
         {!this.state.show ?
-        <td>{this.state.amount}</td> :
+        <td>${Number.isInteger(this.state.amount) ? this.state.amount + ".00" : this.state.amount}</td> :
         <td>
         <FormControl
           type="number"

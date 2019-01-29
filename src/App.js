@@ -26,9 +26,7 @@ class App extends Component {
             return <UserHome userId={userId}/>
           }} />
 
-          <Route exact path='/' render={props => {
-            return <SignIn/>
-          }} />
+          <Route exact path='/' component={SignIn} />
 
         <footer className="App-footer">
           <Footer />

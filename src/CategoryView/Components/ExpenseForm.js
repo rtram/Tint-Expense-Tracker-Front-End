@@ -60,7 +60,7 @@ class ExpenseForm extends Component {
         <h3>Add an Expense </h3>
         <Grid>
           <Row>
-            <Col md={2}></Col>
+            <Col md={2}/>
             <Col md={4}>
               <Form>
                 <FormGroup>
@@ -96,7 +96,7 @@ class ExpenseForm extends Component {
                 </Button>
               </Form>
             </Col>
-            <Col md={6}></Col>
+            <Col md={6}/>
           </Row>
         </Grid>
 

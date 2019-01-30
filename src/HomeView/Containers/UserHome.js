@@ -114,65 +114,6 @@ class UserHome extends Component {
 
     return threeMonthData
   }
-//
-//   addTransaction = (transactionObject) => {
-//     let allTransactions = [...this.state.transactions, transactionObject]
-//
-// // FILTERS CURRENT MONTH TRANSACTIONS ==========================================
-//     let currentMonthTransactions = allTransactions.filter(transactionObject => {
-//       let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
-//       let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
-//       let presentMonth = new Date().getMonth() + 1
-//       let presentYear = new Date().getFullYear()
-//       return (presentMonth === transactionMonthInt) && (presentYear === transactionYearInt)
-//     })
-// //=============================================================================
-//     this.setState({
-//       transactions: allTransactions,
-//       currentMonthTransactions: currentMonthTransactions
-//     },
-//     this.setThreeMonthData
-//     )
-//   }
-//
-//   handleDelete = (transactionObject) => {
-//     fetch(`http://localhost:3001/transactions/${transactionObject.id}`, {
-//       method: "DELETE"
-//     })
-//
-//     // DELETING FROM THIS.STATE.TRANSACTIONS
-//     let copyOfAllTransactions = [...this.state.transactions]
-//     let indexOfAllTransactions = this.state.transactions.indexOf(transactionObject)
-//     copyOfAllTransactions.splice(indexOfAllTransactions, 1)
-//     this.setState({
-//       transactions: copyOfAllTransactions
-//     })
-//
-//     // DELETING FROM THIS.STATE.CURRENTMONTHTRANSACTIONS
-//     let copyOfCurrentMonthTransactions = [...this.filterCurrentMonthTransactions()]
-//     let indexOfCurrentMonthTransactions = this.filterCurrentMonthTransactions().indexOf(transactionObject)
-//     copyOfCurrentMonthTransactions.splice(indexOfCurrentMonthTransactions, 1)
-//     this.setState({
-//       currentMonthTransactions: copyOfCurrentMonthTransactions
-//     }, this.setThreeMonthData
-//     )
-//   }
-//
-//   handleTransactionArrayUpdate = (updateObject, transactionObject) => {
-//     let copyOfTransactions = [...this.state.transactions]
-//     let index = copyOfTransactions.indexOf(transactionObject)
-//     copyOfTransactions.splice(index, 1, updateObject)
-//
-// // FILTERS CURRENT MONTH TRANSACTIONS ==========================================
-//     let currentMonthTransactions = copyOfTransactions.filter(transactionObject => {
-//       let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
-//       let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
-//       let presentMonth = new Date().getMonth() + 1
-//       let presentYear = new Date().getFullYear()
-//       return (presentMonth === transactionMonthInt) && (presentYear === transactionYearInt)
-//     })
-// // =============================================================================
-//   }
 
   currentMonth = () => {
     let index = new Date().getMonth()

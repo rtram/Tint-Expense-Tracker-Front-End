@@ -40,4 +40,47 @@ const postingTransaction = object => {
   }
 }
 
-export { fetchingTransactions, postingTransaction }
+const updatedTransaction = data => {
+  return {
+    type: 'UPDATED_TRANSACTION',
+    payload: data
+  }
+}
+
+const updatingTransaction = object => {
+  return dispatch => {
+    fetch(`http://localhost:3001/transactions/${object.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(object)
+    })
+      .then(res => res.json())
+      .then(data =>
+        dispatch(updatedTransaction(data))
+      )
+  }
+}
+
+const deletedTransaction = data => {
+  return {
+    type: 'DELETED_TRANSACTION',
+    payload: data
+  }
+}
+
+const deletingTransaction = object => {
+  return dispatch => {
+    dispatch(deletedTransaction(object))
+    fetch(`http://localhost:3001/transactions/${object.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(object)
+    })
+  }
+}
+
+export { fetchingTransactions, postingTransaction, updatingTransaction, deletingTransaction }

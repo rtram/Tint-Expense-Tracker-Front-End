@@ -115,7 +115,10 @@ class CategoryDetails extends Component {
             </thead>
             <tbody>
             {this.categoryTotal() > 0 ? this.sortedTransactions().map(transaction => (
-              <Transaction key={transaction.id} transactionObject={transaction} handleDelete={this.props.handleDelete} handleTransactionArrayUpdate={this.props.handleTransactionArrayUpdate}/>)) : null
+              <Transaction
+              key={transaction.id}
+              transactionObject={transaction}
+              />)) : null
             }
             </tbody>
           </Table>

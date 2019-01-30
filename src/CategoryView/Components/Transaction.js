@@ -1,8 +1,10 @@
 import React, { Component } from "react"
+import { connect } from 'react-redux'
 import '../Containers/CategoryDetails.css';
 import { FormControl, Button} from "react-bootstrap"
+import { updatingTransaction, deletingTransaction } from '../../redux/actions/transactions.js'
 
-export default class Transactions extends Component {
+class Transactions extends Component {
 
   constructor() {
     super()
@@ -16,6 +18,10 @@ export default class Transactions extends Component {
   }
 
   componentDidMount() {
+    this.setTransactionState()
+  }
+
+  setTransactionState = () => {
     this.setState({
       id: this.props.transactionObject.id,
       date: this.props.transactionObject.date,
@@ -28,31 +34,28 @@ export default class Transactions extends Component {
     this.setState({ show: !this.state.show });
   }
 
-  handleUpdate = () => {
+  updateObject = () => {
     let updateObject = {
       id: this.state.id,
       date: this.state.date,
       description: this.state.description,
       amount: parseFloat(this.state.amount),
-      category: this.props.transactionObject.category,
-      user: this.props.transactionObject.user
     }
-
-    this.props.handleTransactionArrayUpdate(updateObject, this.props.transactionObject)
-
-    fetch(`http://localhost:3001/transactions/${this.state.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(updateObject)
-    })
+    return updateObject
   }
 
   handleChange = (event) => {
     const name = event.target.name
     const value = event.target.value
     this.setState({[name]: value})
+  }
+
+  handleUpdate = () => {
+    this.props.updatingTransaction(this.updateObject())
+  }
+
+  handleDelete = () => {
+    this.props.deletingTransaction(this.updateObject())
   }
 
   render() {
@@ -133,7 +136,7 @@ export default class Transactions extends Component {
               }}
               onClick={() => {
                 this.handleToggle()
-                this.props.handleDelete(this.props.transactionObject)
+                this.handleDelete()
               }}
             >
               Delete
@@ -145,3 +148,5 @@ export default class Transactions extends Component {
     )
   }
 }
+
+export default connect(null, { updatingTransaction, deletingTransaction })(Transactions)

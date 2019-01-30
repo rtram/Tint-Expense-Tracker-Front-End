@@ -19,6 +19,22 @@ const transactionsReducer = (state = [], action) => {
       return action.payload.transactions
     case 'POSTED_TRANSACTION':
       return [...state, action.payload]
+    case 'UPDATED_TRANSACTION':
+      let originalTransaction = state.find(transactionObject => (
+        transactionObject.id === action.payload.id
+      ))
+      let index = state.indexOf(originalTransaction)
+      let copyState = state.slice()
+      copyState.splice(index, 1, action.payload)
+      return copyState
+    case 'DELETED_TRANSACTION':
+      originalTransaction = state.find(transactionObject => (
+        transactionObject.id === action.payload.id
+      ))
+      index = state.indexOf(originalTransaction)
+      copyState = state.slice()
+      copyState.splice(index, 1)
+      return copyState
     default:
       return state
   }

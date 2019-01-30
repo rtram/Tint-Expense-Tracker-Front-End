@@ -11,7 +11,6 @@ class CategoryDetails extends Component {
   constructor() {
     super()
     this.state={
-      categoryNames:["Auto & Transport", "Bills & Utilities", "Education", "Entertainment", "Food & Dining", "Gifts & Donations", "Health & Fitness", "Miscellaneous", "Shopping", "Travel"],
       months: ['January','February','March','April','May','June','July','August','September','October','November','December']
     }
   }
@@ -25,6 +24,7 @@ class CategoryDetails extends Component {
     return this.state.months[index]
   }
 
+// RETURNS USER'S CURRENT MONTH TRANSACTIONS (ALL CATEGORIES)
   currentMonthTransactions = () => (
     this.props.transactions.filter(transactionObject => {
       let transactionMonth = parseInt(transactionObject.date.split("-")[1])
@@ -36,13 +36,14 @@ class CategoryDetails extends Component {
     })
   )
 
+// RETURNS USER'S CURRENT MONTH CATEGORY TRANSACTIONS (SPECIFIC CATEGORY)
   categoryTransactions = () => {
     let transactions = this.currentMonthTransactions().filter(transactionObject => transactionObject.category.id === this.props.categoryId)
 
     return transactions
   }
 
-// RETURNS SORTED TRANSACTION - RECENT TO OLDEST
+// RETURNS SORTED TRANSACTIONS - RECENT TO OLDEST
   sortedTransactions = () => {
     let ascendingTransactions;
 
@@ -51,6 +52,7 @@ class CategoryDetails extends Component {
     return ascendingTransactions
   }
 
+// RETURNS CATEGORY SPECIFIC TOTAL
   categoryTotal = () => {
     let categoryTotal;
     let transactionAmounts = this.categoryTransactions().map(transaction => transaction.amount)
@@ -63,7 +65,7 @@ class CategoryDetails extends Component {
     return categoryTotal
   }
 
-  // TAKES IN ARRAY OF INTEGERS AND RETURNS SUM
+// TAKES IN ARRAY OF INTEGERS AND RETURNS SUM
   transactionsReducer = (arr) => {
     let reducer = (accumulator, currentValue) => accumulator + currentValue
     let total = arr.reduce(reducer)
@@ -71,12 +73,12 @@ class CategoryDetails extends Component {
     return floatTotal
   }
 
+  categoryName = () => this.props.categoryNames[this.props.categoryId - 1]
+
   render() {
 
     return (
       <div>
-
-      <br/>
 
       <Grid>
         <Row>
@@ -93,22 +95,13 @@ class CategoryDetails extends Component {
         </Row>
       </Grid>
 
-      <br/>
-      <br/>
-
-      {this.props.transactions? this.state.categoryNames[this.props.categoryId-1] : null}
-
-      <br/>
+      {this.props.transactions? this.categoryName() : null}
 
       <strong>{this.currentMonth()}</strong>
 
-      <br/>
-      <br/>
       <Grid>
         <Row>
-          <Col md={2}>
-          </Col>
-
+          <Col md={2}/>
           <Col md={8}>
           <Table bordered condensed hover>
             <thead>
@@ -122,31 +115,23 @@ class CategoryDetails extends Component {
             </thead>
             <tbody>
             {this.categoryTotal() > 0 ? this.sortedTransactions().map(transaction => (
-
-                <Transaction key={transaction.id} transactionObject={transaction} handleDelete={this.props.handleDelete} handleTransactionArrayUpdate={this.props.handleTransactionArrayUpdate}/>)) : null
+              <Transaction key={transaction.id} transactionObject={transaction} handleDelete={this.props.handleDelete} handleTransactionArrayUpdate={this.props.handleTransactionArrayUpdate}/>)) : null
             }
             </tbody>
           </Table>
           </Col>
-
-          <Col md={2}>
-          </Col>
+          <Col md={2}/>
         </Row>
 
-
-
         <Row>
-          <Col md={2}>
-          </Col>
+          <Col md={2}/>
           <Col md={8}>
           <ExpenseForm
-            selectedCategory={this.props.selectedCategory} transactions={this.props.transactions}
-            userObject={this.props.userObject}
-            addTransaction={this.props.addTransaction}
+            categoryId={this.props.categoryId}
+            selectedCategory={this.props.selectedCategory}
           />
           </Col>
-          <Col md={2}>
-          </Col>
+          <Col md={2}/>
         </Row>
 
         <Row>
@@ -174,7 +159,8 @@ class CategoryDetails extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    transactions: state.transactions
+    transactions: state.transactions,
+    categoryNames: state.categoryNames
   }
 }
 

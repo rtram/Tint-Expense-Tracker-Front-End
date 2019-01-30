@@ -17,14 +17,21 @@ const transactionsReducer = (state = [], action) => {
   switch (action.type) {
     case 'FETCHED_TRANSACTIONS':
       return action.payload.transactions
+    case 'POSTED_TRANSACTION':
+      return [...state, action.payload]
     default:
       return state
   }
 }
 
+const categoryNamesReducer = (state = ["Auto & Transport", "Bills & Utilities", "Education", "Entertainment", "Food & Dining", "Gifts & Donations", "Health & Fitness", "Miscellaneous", "Shopping", "Travel"], action) => {
+  return state
+}
+
 const rootReducer = combineReducers({
   user: userReducer,
-  transactions: transactionsReducer
+  transactions: transactionsReducer,
+  categoryNames: categoryNamesReducer
 })
 
 

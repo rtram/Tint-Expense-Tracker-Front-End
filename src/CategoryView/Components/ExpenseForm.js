@@ -29,37 +29,30 @@ class ExpenseForm extends Component {
     this.setState({[name]: value})
   }
 
+  categoryObject = () => {
+    let categoryObject = {
+      id: this.props.categoryId,
+      name: this.categoryName()
+    }
+    return categoryObject
+  }
+
   handleSubmit = (event) => {
     event.preventDefault()
 
-    let categoryObject;
-    let userObject;
-
-    if (this.props.selectedCategory) {
-      categoryObject = {
-        id: this.props.selectedCategory.id,
-        name: this.props.selectedCategory.name
-      }
-
-      userObject = {
-        id: this.props.userObject.id,
-        first_name: this.props.userObject.first_name,
-        last_name: this.props.userObject.last_name
-      }
-    }
-
-    let jsonObject = {
+    let transactionObject = {
         date: this.state.date,
         description: this.state.description,
         amount: parseFloat(this.state.amount),
-        category: categoryObject,
-        user: userObject
+        category: this.categoryObject(),
+        user: this.props.user
     }
 
-    this.props.postingTransaction(jsonObject)
-
-    this.props.addTransaction(jsonObject)
+    this.props.postingTransaction(transactionObject)
+    this.resetState()
   }
+
+  categoryName = () => this.props.categoryNames[this.props.categoryId - 1]
 
   render() {
     return (
@@ -86,7 +79,7 @@ class ExpenseForm extends Component {
                     value={this.state.description}
                     onChange={this.handleChange}
                   />
-                  {this.props.selectedCategory ? this.props.selectedCategory.name : null}
+                  {this.props.categoryId ? this.categoryName(): null}
                   <FormControl
                     type="number"
                     min="0.01"
@@ -98,7 +91,9 @@ class ExpenseForm extends Component {
                     onChange={this.handleChange}
                   />
                 </FormGroup>
-                <Button id="hvr-fade" onClick={this.handleSubmit}><strong>Submit</strong></Button>
+                <Button id="hvr-fade" onClick={this.handleSubmit}>
+                  <strong>Submit</strong>
+                </Button>
               </Form>
             </Col>
             <Col md={6}></Col>
@@ -111,5 +106,11 @@ class ExpenseForm extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    categoryNames: state.categoryNames
+  }
+}
 
-export default connect(null, { postingTransaction })(ExpenseForm)
+export default connect(mapStateToProps, { postingTransaction })(ExpenseForm)

@@ -18,15 +18,13 @@ const fetchingTransactions = userId => {
 }
 
 const postedTransaction = data => {
-  debugger
   return {
-    type: 'POSTED_TRANSACTIONS',
+    type: 'POSTED_TRANSACTION',
     payload: data
   }
 }
 
 const postingTransaction = object => {
-  debugger
   return dispatch => {
     fetch('http://localhost:3001/transactions', {
       method: 'POST',

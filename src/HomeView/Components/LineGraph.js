@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import {Line} from 'react-chartjs-2'
 import {Grid, Row, Col} from "react-bootstrap"
 
-export default class Chart extends Component {
+export default class LineGraph extends Component {
 
   render() {
 

@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import Summary from "./Summary"
 import CategoryContainer from "./CategoryContainer"
 import CategoryDetails from "../../CategoryView/Containers/CategoryDetails"
-import UserHomeChart from "../Components/UserHomeChart.js"
+import LineGraph from "../Components/LineGraph.js"
 import {Route, Switch} from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchingTransactions } from '../../redux/actions/transactions.js'
@@ -10,6 +10,12 @@ import WelcomeJumbotron from '../WelcomeJumbotron.js'
 import TipsCarousel from '../TipsCarousel.js'
 
 class UserHome extends Component {
+  constructor() {
+    super()
+    this.state={
+      months: ['January','February','March','April','May','June','July','August','September','October','November','December']
+    }
+  }
 
   componentDidMount() {
     this.props.fetchingTransactions(this.props.userId)
@@ -110,117 +116,104 @@ class UserHome extends Component {
 
     return threeMonthData
   }
+//
+//   addTransaction = (transactionObject) => {
+//     let allTransactions = [...this.state.transactions, transactionObject]
+//
+// // FILTERS CURRENT MONTH TRANSACTIONS ==========================================
+//     let currentMonthTransactions = allTransactions.filter(transactionObject => {
+//       let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+//       let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
+//       let presentMonth = new Date().getMonth() + 1
+//       let presentYear = new Date().getFullYear()
+//       return (presentMonth === transactionMonthInt) && (presentYear === transactionYearInt)
+//     })
+// //=============================================================================
+//     this.setState({
+//       transactions: allTransactions,
+//       currentMonthTransactions: currentMonthTransactions
+//     },
+//     this.setThreeMonthData
+//     )
+//   }
+//
+//   handleDelete = (transactionObject) => {
+//     fetch(`http://localhost:3001/transactions/${transactionObject.id}`, {
+//       method: "DELETE"
+//     })
+//
+//     // DELETING FROM THIS.STATE.TRANSACTIONS
+//     let copyOfAllTransactions = [...this.state.transactions]
+//     let indexOfAllTransactions = this.state.transactions.indexOf(transactionObject)
+//     copyOfAllTransactions.splice(indexOfAllTransactions, 1)
+//     this.setState({
+//       transactions: copyOfAllTransactions
+//     })
+//
+//     // DELETING FROM THIS.STATE.CURRENTMONTHTRANSACTIONS
+//     let copyOfCurrentMonthTransactions = [...this.filterCurrentMonthTransactions()]
+//     let indexOfCurrentMonthTransactions = this.filterCurrentMonthTransactions().indexOf(transactionObject)
+//     copyOfCurrentMonthTransactions.splice(indexOfCurrentMonthTransactions, 1)
+//     this.setState({
+//       currentMonthTransactions: copyOfCurrentMonthTransactions
+//     }, this.setThreeMonthData
+//     )
+//   }
+//
+//   handleTransactionArrayUpdate = (updateObject, transactionObject) => {
+//     let copyOfTransactions = [...this.state.transactions]
+//     let index = copyOfTransactions.indexOf(transactionObject)
+//     copyOfTransactions.splice(index, 1, updateObject)
+//
+// // FILTERS CURRENT MONTH TRANSACTIONS ==========================================
+//     let currentMonthTransactions = copyOfTransactions.filter(transactionObject => {
+//       let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
+//       let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
+//       let presentMonth = new Date().getMonth() + 1
+//       let presentYear = new Date().getFullYear()
+//       return (presentMonth === transactionMonthInt) && (presentYear === transactionYearInt)
+//     })
+// // =============================================================================
+//   }
 
-  addTransaction = (transactionObject) => {
-    let allTransactions = [...this.state.transactions, transactionObject]
-
-// FILTERS CURRENT MONTH TRANSACTIONS ==========================================
-    let currentMonthTransactions = allTransactions.filter(transactionObject => {
-      let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
-      let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
-      let presentMonth = new Date().getMonth() + 1
-      let presentYear = new Date().getFullYear()
-      return (presentMonth === transactionMonthInt) && (presentYear === transactionYearInt)
-    })
-//=============================================================================
-    this.setState({
-      transactions: allTransactions,
-      currentMonthTransactions: currentMonthTransactions
-    },
-    this.setThreeMonthData
-    )
+  currentMonth = () => {
+    let index = new Date().getMonth()
+    return this.state.months[index]
   }
 
-  handleDelete = (transactionObject) => {
-    fetch(`http://localhost:3001/transactions/${transactionObject.id}`, {
-      method: "DELETE"
-    })
-
-    // DELETING FROM THIS.STATE.TRANSACTIONS
-    let copyOfAllTransactions = [...this.state.transactions]
-    let indexOfAllTransactions = this.state.transactions.indexOf(transactionObject)
-    copyOfAllTransactions.splice(indexOfAllTransactions, 1)
-    this.setState({
-      transactions: copyOfAllTransactions
-    })
-
-    // DELETING FROM THIS.STATE.CURRENTMONTHTRANSACTIONS
-    let copyOfCurrentMonthTransactions = [...this.filterCurrentMonthTransactions()]
-    let indexOfCurrentMonthTransactions = this.filterCurrentMonthTransactions().indexOf(transactionObject)
-    copyOfCurrentMonthTransactions.splice(indexOfCurrentMonthTransactions, 1)
-    this.setState({
-      currentMonthTransactions: copyOfCurrentMonthTransactions
-    }, this.setThreeMonthData
-    )
-  }
-
-  handleTransactionArrayUpdate = (updateObject, transactionObject) => {
-    let copyOfTransactions = [...this.state.transactions]
-    let index = copyOfTransactions.indexOf(transactionObject)
-    copyOfTransactions.splice(index, 1, updateObject)
-
-// FILTERS CURRENT MONTH TRANSACTIONS ==========================================
-    let currentMonthTransactions = copyOfTransactions.filter(transactionObject => {
-      let transactionMonthInt = parseInt(transactionObject.date.split("-")[1])
-      let transactionYearInt = parseInt(transactionObject.date.split("-")[0])
-      let presentMonth = new Date().getMonth() + 1
-      let presentYear = new Date().getFullYear()
-      return (presentMonth === transactionMonthInt) && (presentYear === transactionYearInt)
-    })
-// =============================================================================
-
-    this.setState({
-      transactions: copyOfTransactions,
-      currentMonthTransactions: currentMonthTransactions
-    }, this.setThreeMonthData
-    )
+  lineGraphLabels = () => {
+    let lastThreeMonths = []
+    let index = new Date().getMonth()
+    if (index === 0) {
+      lastThreeMonths.push(this.state.months[10])
+      lastThreeMonths.push(this.state.months[11])
+      lastThreeMonths.push(this.state.months[index])
+    } else if (index === 1) {
+      lastThreeMonths.push(this.state.months[11])
+      lastThreeMonths.push(this.state.months[0])
+      lastThreeMonths.push(this.state.months[index])
+    } else {
+      lastThreeMonths.push(this.state.months[index-2])
+      lastThreeMonths.push(this.state.months[index-1])
+      lastThreeMonths.push(this.state.months[index])
+    }
+    return lastThreeMonths
   }
 
   render() {
-    // debugger
 
-//GET CURRENT MONTH=============================================================
-    let months    =['January','February','March','April','May','June','July','August','September','October','November','December']
-
-    let currentMonthGetter = () => {
-      let index = new Date().getMonth()
-      return months[index]
-    }
-
-    let currentMonth = currentMonthGetter()
-
-//CHART METHODS=================================================================
-    let labelGetter = () => {
-      let lastThreeMonths = []
-      let index = new Date().getMonth()
-      if (index === 0) {
-        lastThreeMonths.push(months[10])
-        lastThreeMonths.push(months[11])
-        lastThreeMonths.push(months[index])
-      } else if (index === 1) {
-        lastThreeMonths.push(months[11])
-        lastThreeMonths.push(months[0])
-        lastThreeMonths.push(months[index])
-      } else {
-        lastThreeMonths.push(months[index-2])
-        lastThreeMonths.push(months[index-1])
-        lastThreeMonths.push(months[index])
-      }
-      return lastThreeMonths
-    }
-
-//==============================================================================
 
     return (
       <div>
         <Switch>
         <Route path='/users/:id/:categoryId' render={props => {
-          let categoryId = props.match.params.categoryId
+          let categoryId = parseInt(props.match.params.categoryId)
           let selectedCategory;
           let userCurrentTransactions;
 
-          if (this.state.transactions) {
-            selectedCategory = this.state.transactions.filter(transactionObject => transactionObject.category.id === parseInt(categoryId))
+          if (this.props.transactions) {
+            selectedCategory = this.props.transactions.filter(transactionObject => transactionObject.category.id === categoryId)
+            debugger
             selectedCategory = selectedCategory[0].category
 
             userCurrentTransactions = this.filterCurrentMonthTransactions().filter(transactionObject => (transactionObject.category.id === parseInt(categoryId)))
@@ -234,7 +227,7 @@ class UserHome extends Component {
               addTransaction={this.addTransaction}
               handleDelete={this.handleDelete}
               handleTransactionArrayUpdate={this.handleTransactionArrayUpdate}
-              currentMonth={currentMonth}
+              currentMonth={this.currentMonth()}
             />
           )
         }} />
@@ -247,21 +240,18 @@ class UserHome extends Component {
             <WelcomeJumbotron />
             <TipsCarousel />
 
-            <br/>
-            <br/>
-
             <Summary
               transactions={this.filterCurrentMonthTransactions()}
-              currentMonth={currentMonth}
+              currentMonth={this.currentMonth()}
             />
-            <UserHomeChart
-              label={labelGetter()}
+            <LineGraph
+              label={this.lineGraphLabels()}
               data={this.threeMonthData()}
             />
             <CategoryContainer
               transactions={this.filterCurrentMonthTransactions()}
               userObject={this.props.user}
-              currentMonth={currentMonth}
+              currentMonth={this.currentMonth()}
             />
             </div>
           )

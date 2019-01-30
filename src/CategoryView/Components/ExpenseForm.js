@@ -1,8 +1,10 @@
 import React, { Component } from "react"
 import '../Containers/CategoryDetails.css';
+import { connect } from 'react-redux'
+import { postingTransaction } from '../../redux/actions/transactions.js'
 import {Form, FormGroup, FormControl, Button, Grid, Row, Col} from "react-bootstrap"
 
-export default class ExpenseForm extends Component {
+class ExpenseForm extends Component {
 
   constructor() {
     super()
@@ -11,6 +13,14 @@ export default class ExpenseForm extends Component {
       description: "",
       amount: ""
     }
+  }
+
+  resetState = () => {
+    this.setState({
+      date: "",
+      description: "",
+      amount: ""
+    })
   }
 
   handleChange = (event) => {
@@ -46,21 +56,9 @@ export default class ExpenseForm extends Component {
         user: userObject
     }
 
-    fetch('http://localhost:3001/transactions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(jsonObject)
-    })
+    this.props.postingTransaction(jsonObject)
 
     this.props.addTransaction(jsonObject)
-
-    this.setState({
-      date: "",
-      description: "",
-      amount: ""
-    })
   }
 
   render() {
@@ -112,3 +110,6 @@ export default class ExpenseForm extends Component {
     )
   }
 }
+
+
+export default connect(null, { postingTransaction })(ExpenseForm)

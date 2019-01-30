@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import {Link} from 'react-router-dom'
 import {Button} from 'react-bootstrap'
 
-export default class CategoryBar extends Component {
+export default class CategoryButton extends Component {
 
   render() {
 

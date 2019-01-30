@@ -1,9 +1,7 @@
 import React, { Component } from "react"
 import Summary from "./Summary"
 import CategoryContainer from "./CategoryContainer"
-import CategoryDetails from "../../CategoryView/Containers/CategoryDetails"
 import LineGraph from "../Components/LineGraph.js"
-import {Route, Switch} from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchingTransactions } from '../../redux/actions/transactions.js'
 import WelcomeJumbotron from '../WelcomeJumbotron.js'
@@ -205,58 +203,22 @@ class UserHome extends Component {
 
     return (
       <div>
-        <Switch>
-        <Route path='/users/:id/:categoryId' render={props => {
-          let categoryId = parseInt(props.match.params.categoryId)
-          let selectedCategory;
-          let userCurrentTransactions;
+        <WelcomeJumbotron />
+        <TipsCarousel />
 
-          if (this.props.transactions) {
-            selectedCategory = this.props.transactions.filter(transactionObject => transactionObject.category.id === categoryId)
-            debugger
-            selectedCategory = selectedCategory[0].category
-
-            userCurrentTransactions = this.filterCurrentMonthTransactions().filter(transactionObject => (transactionObject.category.id === parseInt(categoryId)))
-          }
-
-          return (
-            <CategoryDetails
-              selectedCategory={selectedCategory}
-              transactions={userCurrentTransactions}
-              userObject={this.props.user}
-              addTransaction={this.addTransaction}
-              handleDelete={this.handleDelete}
-              handleTransactionArrayUpdate={this.handleTransactionArrayUpdate}
-              currentMonth={this.currentMonth()}
-            />
-          )
-        }} />
-
-        <Route path='/users/:id' render={props => {
-
-          return (
-            <div>
-
-            <WelcomeJumbotron />
-            <TipsCarousel />
-
-            <Summary
-              transactions={this.filterCurrentMonthTransactions()}
-              currentMonth={this.currentMonth()}
-            />
-            <LineGraph
-              label={this.lineGraphLabels()}
-              data={this.threeMonthData()}
-            />
-            <CategoryContainer
-              transactions={this.filterCurrentMonthTransactions()}
-              userObject={this.props.user}
-              currentMonth={this.currentMonth()}
-            />
-            </div>
-          )
-        }} />
-        </Switch>
+        <Summary
+          transactions={this.filterCurrentMonthTransactions()}
+          currentMonth={this.currentMonth()}
+        />
+        <LineGraph
+          label={this.lineGraphLabels()}
+          data={this.threeMonthData()}
+        />
+        <CategoryContainer
+          transactions={this.filterCurrentMonthTransactions()}
+          userObject={this.props.user}
+          currentMonth={this.currentMonth()}
+        />
       </div>
     )
   }

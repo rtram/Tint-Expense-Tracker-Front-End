@@ -1,30 +1,77 @@
 import React, { Component } from "react"
+import { connect } from 'react-redux'
 import './CategoryDetails.css';
 import Transaction from "../Components/Transaction"
 import ExpenseForm from "../Components/ExpenseForm"
 import {Link} from 'react-router-dom'
+import { fetchingTransactions } from '../../redux/actions/transactions.js'
 import {Table, Button, Grid, Row, Col} from 'react-bootstrap'
 
-export default class CategoryDetails extends Component {
+class CategoryDetails extends Component {
+  constructor() {
+    super()
+    this.state={
+      categoryNames:["Auto & Transport", "Bills & Utilities", "Education", "Entertainment", "Food & Dining", "Gifts & Donations", "Health & Fitness", "Miscellaneous", "Shopping", "Travel"],
+      months: ['January','February','March','April','May','June','July','August','September','October','November','December']
+    }
+  }
+
+  componentDidMount() {
+    this.props.fetchingTransactions(this.props.userId)
+  }
+
+  currentMonth = () => {
+    let index = new Date().getMonth()
+    return this.state.months[index]
+  }
+
+  currentMonthTransactions = () => (
+    this.props.transactions.filter(transactionObject => {
+      let transactionMonth = parseInt(transactionObject.date.split("-")[1])
+      let transactionYear = parseInt(transactionObject.date.split("-")[0])
+      let currentMonth = new Date().getMonth() + 1
+      let currentYear = new Date().getFullYear()
+
+      return (currentMonth === transactionMonth) && (currentYear === transactionYear)
+    })
+  )
+
+  categoryTransactions = () => {
+    let transactions = this.currentMonthTransactions().filter(transactionObject => transactionObject.category.id === this.props.categoryId)
+
+    return transactions
+  }
+
+// RETURNS SORTED TRANSACTION - RECENT TO OLDEST
+  sortedTransactions = () => {
+    let ascendingTransactions;
+
+    ascendingTransactions = this.categoryTransactions().sort((a, b) => new Date(a.date) - new Date (b.date))
+
+    return ascendingTransactions
+  }
+
+  categoryTotal = () => {
+    let categoryTotal;
+    let transactionAmounts = this.categoryTransactions().map(transaction => transaction.amount)
+
+    if (transactionAmounts.length === 0) {
+      return categoryTotal = 0
+    }
+
+    categoryTotal = this.transactionsReducer(transactionAmounts)
+    return categoryTotal
+  }
+
+  // TAKES IN ARRAY OF INTEGERS AND RETURNS SUM
+  transactionsReducer = (arr) => {
+    let reducer = (accumulator, currentValue) => accumulator + currentValue
+    let total = arr.reduce(reducer)
+    let floatTotal = Math.floor(total * 100) / 100
+    return floatTotal
+  }
 
   render() {
-    let categoryTotal;
-
-    if (this.props.transactions) {
-      categoryTotal = this.props.transactions.map(transaction => transaction.amount)
-
-      if (categoryTotal.length > 0) {
-        let reducer = (accumulator, currentValue) => accumulator + currentValue
-        categoryTotal = categoryTotal.reduce(reducer)
-        categoryTotal = Math.floor(categoryTotal * 100) / 100
-      }
-    }
-
-// SORT BY RECENT TO OLDEST
-    let ascendingTransactions;
-    if (this.props.transactions) {
-      ascendingTransactions = this.props.transactions.sort((a, b) => new Date(a.date) - new Date (b.date))
-    }
 
     return (
       <div>
@@ -35,8 +82,8 @@ export default class CategoryDetails extends Component {
         <Row>
           <Col md={4}/>
           <Col md={4}>
-            {this.props.userObject ?
-              <Link to={`/users/${this.props.userObject.id}/`}>
+            {this.props.user ?
+              <Link to={`/users/${this.props.user.id}/`}>
                 <Button bsStyle="primary" block>
                   <strong>Go Back to User Home</strong>
                 </Button>
@@ -49,11 +96,11 @@ export default class CategoryDetails extends Component {
       <br/>
       <br/>
 
-      {this.props.transactions? this.props.selectedCategory.name : null}
+      {this.props.transactions? this.state.categoryNames[this.props.categoryId-1] : null}
 
       <br/>
 
-      <strong>{this.props.currentMonth}</strong>
+      <strong>{this.currentMonth()}</strong>
 
       <br/>
       <br/>
@@ -74,7 +121,7 @@ export default class CategoryDetails extends Component {
               </tr>
             </thead>
             <tbody>
-            {categoryTotal > 0 ? ascendingTransactions.map(transaction => (
+            {this.categoryTotal() > 0 ? this.sortedTransactions().map(transaction => (
 
                 <Transaction key={transaction.id} transactionObject={transaction} handleDelete={this.props.handleDelete} handleTransactionArrayUpdate={this.props.handleTransactionArrayUpdate}/>)) : null
             }
@@ -110,7 +157,7 @@ export default class CategoryDetails extends Component {
             <thead>
               {this.props.selectedCategory ? <th>{this.props.selectedCategory.name}</th>: null }
               <th>Total</th>
-              <th>${Number.isInteger(categoryTotal) ? categoryTotal + ".00" : categoryTotal}</th>
+              <th>${Number.isInteger(this.categoryTotal()) ? this.categoryTotal() + ".00" : this.categoryTotal()}</th>
             </thead>
           </Table>
           </Col>
@@ -123,3 +170,12 @@ export default class CategoryDetails extends Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    transactions: state.transactions
+  }
+}
+
+export default connect(mapStateToProps, { fetchingTransactions })(CategoryDetails)

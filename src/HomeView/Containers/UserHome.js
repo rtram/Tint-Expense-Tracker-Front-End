@@ -77,8 +77,7 @@ class UserHome extends Component {
   // TAKES IN ARRAY OF TRANSACTION OBJECTS RETURNS SUM TOTAL
   calculateTotal = (array) => {
     let monthTotal;
-    let monthTransactions = array
-    let monthTransactionsAmt = monthTransactions.map(transaction => transaction.amount)
+    let monthTransactionsAmt = array.map(transaction => transaction.amount)
 
     if (!monthTransactionsAmt.length > 0) {
       monthTotal = 0.00

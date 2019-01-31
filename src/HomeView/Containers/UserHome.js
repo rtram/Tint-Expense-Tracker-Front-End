@@ -74,41 +74,31 @@ class UserHome extends Component {
     return floatTotal
   }
 
+  // TAKES IN ARRAY OF TRANSACTION OBJECTS RETURNS SUM TOTAL
+  calculateTotal = (array) => {
+    let monthTotal;
+    let monthTransactions = array
+    let monthTransactionsAmt = monthTransactions.map(transaction => transaction.amount)
+
+    if (!monthTransactionsAmt.length > 0) {
+      monthTotal = 0.00
+    } else {
+      monthTotal = this.transactionsReducer(monthTransactionsAmt)
+    }
+    return monthTotal
+  }
+
   threeMonthData = () => {
     let threeMonthData = []
     let currentMonthTotal;
     let lastMonthTotal;
     let lastLastMonthTotal;
 
-    // CURRENT MONTH TOTAL
-    let currentMonthTransactions = this.filterCurrentMonthTransactions()
-    let currentMonthTransactionsAmt = currentMonthTransactions.map(transaction => transaction.amount)
+    currentMonthTotal = this.calculateTotal(this.filterCurrentMonthTransactions())
 
-    if (!currentMonthTransactionsAmt.length > 0) {
-      currentMonthTotal = 0.00
-    } else {
-      currentMonthTotal = this.transactionsReducer(currentMonthTransactionsAmt)
-    }
+    lastMonthTotal = this.calculateTotal(this.filterLastMonthTransactions())
 
-    // LAST MONTH TOTAL
-    let lastMonthTransactions = this.filterLastMonthTransactions()
-    let lastMonthTransactionsAmt = lastMonthTransactions.map(transaction => transaction.amount)
-
-    if (!lastMonthTransactionsAmt.length > 0) {
-      lastMonthTotal = 0.00
-    } else {
-      lastMonthTotal = this.transactionsReducer(lastMonthTransactionsAmt)
-    }
-
-    // LAST LAST MONTH TOTAL
-    let lastLastMonthTransactions = this.filterLastLastMonthTransactions()
-    let lastLastMonthTransactionsAmt = lastLastMonthTransactions.map(transaction => transaction.amount)
-
-    if (!lastLastMonthTransactionsAmt.length > 0) {
-      lastLastMonthTotal = 0.00
-    } else (
-      lastLastMonthTotal = this.transactionsReducer(lastLastMonthTransactionsAmt)
-    )
+    lastLastMonthTotal = this.calculateTotal(this.filterLastLastMonthTransactions())
 
     threeMonthData = [lastLastMonthTotal, lastMonthTotal, currentMonthTotal]
 

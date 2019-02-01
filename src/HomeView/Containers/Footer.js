@@ -1,19 +1,9 @@
-import React, { Component } from "react"
+import React from "react"
 
-export default class Footer extends Component {
+const Footer = () => (
+  <div>
+    This application was made by Robin Tram
+  </div>
+)
 
-  constructor() {
-    super()
-    this.state = {
-    }
-  }
-
-  render() {
-
-    return (
-      <div>
-        This application was made by Robin Tram
-      </div>
-    )
-  }
-}
+export default Footer

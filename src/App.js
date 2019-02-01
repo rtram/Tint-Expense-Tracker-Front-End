@@ -4,7 +4,7 @@ import SignIn from "./SignInView/SignIn"
 import NavBar from "./NavBar/NavBar"
 import UserHome from "./HomeView/Containers/UserHome"
 import CategoryDetails from "./CategoryView/Containers/CategoryDetails"
-import Footer from "./HomeView/Containers/Footer"
+import Footer from "./Footer"
 import { Route, Switch } from 'react-router-dom'
 
 

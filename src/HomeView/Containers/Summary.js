@@ -2,7 +2,9 @@ import React from "react"
 
 const Summary = props => (
   <div>
-    <h1><strong>Your Personal Spending Summary</strong></h1>
+    <h1>
+      <strong>Your Personal Spending Summary</strong>
+    </h1>
     <br/>
     You have spent <strong>${calculateTotal(props.transactions)}</strong> in <strong>{props.currentMonth}</strong>!
   </div>

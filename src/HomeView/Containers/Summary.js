@@ -1,33 +1,30 @@
-import React, { Component } from "react"
+import React from "react"
 
-export default class Summary extends Component {
+const Summary = props => (
+  <div>
+    <h1><strong>Your Personal Spending Summary</strong></h1>
+    <br/>
+    You have spent <strong>${calculateTotal(props.transactions)}</strong> in <strong>{props.currentMonth}</strong>!
+  </div>
+)
 
-  calculateTotal = (array) => {
+const calculateTotal = (array) => {
     let monthTotal;
     let monthTransactionsAmt = array.map(transaction => transaction.amount)
 
     if (!monthTransactionsAmt.length > 0) {
       monthTotal = 0.00
     } else {
-      monthTotal = this.transactionsReducer(monthTransactionsAmt)
+      monthTotal = transactionsReducer(monthTransactionsAmt)
     }
     return monthTotal
   }
 
-  transactionsReducer = (arr) => {
+const transactionsReducer = (arr) => {
     let reducer = (accumulator, currentValue) => accumulator + currentValue
     let total = arr.reduce(reducer)
     let floatTotal = Math.floor(total * 100) / 100
     return floatTotal
   }
 
-  render() {
-    return (
-      <div>
-        <h1><strong>Your Personal Spending Summary</strong></h1>
-        <br/>
-        You have spent <strong>${this.calculateTotal(this.props.transactions)}</strong> in <strong>{this.props.currentMonth}</strong>!
-      </div>
-    )
-  }
-}
+export default Summary

@@ -1,24 +1,20 @@
-import React, { Component } from "react"
+import React from "react"
 import {Link} from 'react-router-dom'
 import {Button} from 'react-bootstrap'
 
-export default class CategoryButton extends Component {
+const CategoryButton = props => (
+  <div >
+    <Link to={`/users/${props.userObject.id}/${props.categoryId}`}>
+      <Button bsStyle="primary" block>
+        <div>
+          <h3>{props.categoryName}</h3>
+        </div>
+        <div>
+          ${Number.isInteger(props.categoryTotal) ? props.categoryTotal + ".00" : props.categoryTotal}
+        </div>
+      </Button>
+    </Link>
+  </div>
+)
 
-  render() {
-
-    return (
-      <div >
-        <Link to={`/users/${this.props.userObject.id}/${this.props.categoryId}`}>
-          <Button bsStyle="primary" block>
-            <div>
-              <h3>{this.props.categoryName}</h3>
-            </div>
-            <div>
-              ${Number.isInteger(this.props.categoryTotal) ? this.props.categoryTotal + ".00" : this.props.categoryTotal}
-            </div>
-          </Button>
-        </Link>
-      </div>
-    )
-  }
-}
+export default CategoryButton

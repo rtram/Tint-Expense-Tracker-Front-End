@@ -1,17 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Jumbotron } from 'react-bootstrap'
 
-class WelcomeJumbotron extends Component {
+const WelcomeJumbotron = props => (
+  <Jumbotron className="Jumbotron">
+    <h1>Welcome Back {props ? props.user.first_name : null}!</h1>
+  </Jumbotron>
+)
 
-  render() {
-    return(
-      <Jumbotron className="Jumbotron">
-        <h1>Welcome Back {this.props ? this.props.user.first_name : null}!</h1>
-      </Jumbotron>
-    )
-  }
-}
+
+
+
 
 const mapStateToProps = state => {
   return {

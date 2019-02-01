@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import {Button, Grid, Row, Col} from "react-bootstrap"
-import {Bar, Doughnut} from 'react-chartjs-2'
+import BarChart from './BarChart.js'
+import Doughnut from './DoughnutChart.js'
 
 export default class CategoryBarChart extends Component {
 
@@ -17,42 +18,42 @@ export default class CategoryBarChart extends Component {
     })
   }
 
-  render() {
-
-    let dataObject = {
-      data: {
-          labels: this.props.categoryLabels,
-          datasets: [{
-              label: 'Money Spent',
-              data: this.props.categoryTotals,
-              backgroundColor: [
-                  'rgba(230, 25, 75, .4)',
-                  'rgba(245, 130, 48, .4)',
-                  'rgba(255, 225, 25, .4)',
-                  'rgba(210, 245, 60, .4)',
-                  'rgba(60, 180, 75, .4)',
-                  'rgba(70, 240, 240, .4)',
-                  'rgba(0, 130, 200, .4)',
-                  'rgba(145, 30, 180, .4)',
-                  'rgba(240, 50, 230, .4)',
-                  'rgba(128, 128, 128, .4)'
-              ],
-              borderColor: [
-                  'red',
-                  'orange',
-                  'yellow',
-                  'lime',
-                  'green',
-                  'cyan',
-                  'blue',
-                  'purple',
-                  'magenta',
-                  'grey'
-              ],
-              borderWidth: 1
-          }]
-      }
+  dataObject = () => (
+    {
+      labels: this.props.categoryLabels,
+      datasets: [{
+          label: 'Money Spent',
+          data: this.props.categoryTotals,
+          backgroundColor: [
+              'rgba(230, 25, 75, .4)',
+              'rgba(245, 130, 48, .4)',
+              'rgba(255, 225, 25, .4)',
+              'rgba(210, 245, 60, .4)',
+              'rgba(60, 180, 75, .4)',
+              'rgba(70, 240, 240, .4)',
+              'rgba(0, 130, 200, .4)',
+              'rgba(145, 30, 180, .4)',
+              'rgba(240, 50, 230, .4)',
+              'rgba(128, 128, 128, .4)'
+          ],
+          borderColor: [
+              'red',
+              'orange',
+              'yellow',
+              'lime',
+              'green',
+              'cyan',
+              'blue',
+              'purple',
+              'magenta',
+              'grey'
+          ],
+          borderWidth: 1
+      }]
     }
+  )
+
+  render() {
 
     return (
       <Grid>
@@ -62,38 +63,14 @@ export default class CategoryBarChart extends Component {
           <Col md={8}>
             <div>
               {this.state.bar ?
-                <Bar
-                  data={dataObject.data}
-                  width={750}
-                  height={500}
-                  options={{
-                    title: {
-                      display: true,
-                      text: `Spending Categories in ${this.props.currentMonth}`,
-                      fontsize: 200
-                    },
-                    legend: {
-                      display: false,
-                      position: "bottom"
-                    }
-                  }}
+                <BarChart
+                  data={this.dataObject()}
+                  currentMonth={this.props.currentMonth}
                 />
                 :
                 <Doughnut
-                  data={dataObject.data}
-                  width={750}
-                  height={500}
-                  options={{
-                    title: {
-                      display: true,
-                      text: `Spending Categories in ${this.props.currentMonth}`,
-                      fontsize: 200
-                    },
-                    legend: {
-                      display: true,
-                      position: "bottom"
-                    }
-                  }}
+                  data={this.dataObject()}
+                  currentMonth={this.props.currentMonth}
                 />
               }
               {this.state.bar ?

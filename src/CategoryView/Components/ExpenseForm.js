@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import '../Containers/CategoryDetails.css';
 import { connect } from 'react-redux'
 import { postingTransaction } from '../../redux/actions/transactions.js'
-import {Form, FormGroup, FormControl, Button, Grid, Row, Col} from "react-bootstrap"
+import { Form, FormGroup, FormControl, Button, Grid, Row, Col } from "react-bootstrap"
 
 class ExpenseForm extends Component {
 

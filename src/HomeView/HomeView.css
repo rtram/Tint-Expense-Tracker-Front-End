@@ -1,0 +1,25 @@
+.user-home {
+  width: 100%
+}
+
+.graph {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.category-container {
+  margin-top: 5%;
+}
+
+.category-buttons-container {
+  margin-top: 5%;
+  width: 50%;
+  display: inline-grid;
+}
+
+.button-container {
+  justify-content: center;
+  display: inline-flex;
+}

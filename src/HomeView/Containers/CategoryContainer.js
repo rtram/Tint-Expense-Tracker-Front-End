@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import CategoryButton from "../Components/CategoryButton"
-import CategoryBarChart from "../Components/CategoryBarChart"
-import {Grid, Row, Col} from "react-bootstrap"
+import CategoryChartContainer from "../Components/CategoryChartContainer"
+import '../HomeView.css'
 
 export default class CategoryContainer extends Component {
   constructor() {
@@ -57,11 +57,11 @@ export default class CategoryContainer extends Component {
   render() {
 
     return (
-      <div>
+      <div class='category-container'>
         Here is where your money went in <strong>{this.props.currentMonth}</strong>
 
         {this.props.transactions ?
-          <CategoryBarChart
+          <CategoryChartContainer
             categoryLabels={this.state.categoryNames}
             categoryTotals={this.categoryTotals()}
             currentMonth={this.props.currentMonth}
@@ -69,14 +69,11 @@ export default class CategoryContainer extends Component {
           null
         }
 
-        <div>
+        <div class='category-buttons-container'>
           <strong>Categories</strong>
 
-          <Grid>
-            <Row>
-              <Col md={3}>
-              </Col>
-              <Col md={3}>
+          <div class='button-container'>
+            <div class='button-group'>
               {this.props.transactions ? this.categoryTotalObjects().slice(0,5).map(categoryTotalObject =>
                <CategoryButton
                 key={categoryTotalObject.id}
@@ -86,8 +83,9 @@ export default class CategoryContainer extends Component {
                 userObject={this.props.userObject}
               />) : null
               }
-              </Col>
-              <Col md={3}>
+            </div>
+
+            <div class='button-group'>
               {this.props.transactions ? this.categoryTotalObjects().slice(5,11).map(categoryTotalObject =>
                <CategoryButton
                 key={categoryTotalObject.id}
@@ -97,11 +95,9 @@ export default class CategoryContainer extends Component {
                 userObject={this.props.userObject}
               />) : null
               }
-              </Col>
-              <Col md={3}>
-              </Col>
-            </Row>
-          </Grid>
+            </div>
+          </div>
+          
         </div>
       </div>
     )

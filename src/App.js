@@ -30,13 +30,6 @@ class App extends Component {
               <CategoryDetails
                 userId={userId}
                 categoryId={categoryId}
-                // selectedCategory={selectedCategory}
-                // transactions={userCurrentTransactions}
-                // userObject={this.props.user}
-                // addTransaction={this.addTransaction}
-                // handleDelete={this.handleDelete}
-                // handleTransactionArrayUpdate={this.handleTransactionArrayUpdate}
-                // currentMonth={this.currentMonth()}
               />
             )
           }} />

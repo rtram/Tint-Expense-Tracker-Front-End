@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import '../HomeView.css'
 import Summary from "./Summary"
 import CategoryContainer from "./CategoryContainer"
 import LineGraph from "../Components/LineGraph.js"
@@ -132,8 +133,9 @@ class UserHome extends Component {
 
 
     return (
-      <div>
+      <div class='user-home'>
         <WelcomeJumbotron />
+
         <TipsCarousel />
 
         <Summary

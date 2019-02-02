@@ -1,9 +1,9 @@
 import React from "react"
-import {Link} from 'react-router-dom'
-import {Button} from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { Button } from 'react-bootstrap'
 
 const CategoryButton = props => (
-  <div >
+  <>
     <Link to={`/users/${props.userObject.id}/${props.categoryId}`}>
       <Button bsStyle="primary" block>
         <div>
@@ -14,7 +14,7 @@ const CategoryButton = props => (
         </div>
       </Button>
     </Link>
-  </div>
+  </>
 )
 
 export default CategoryButton

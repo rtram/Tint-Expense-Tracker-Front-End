@@ -1,9 +1,10 @@
 import React, { Component } from "react"
-import {Button, Grid, Row, Col} from "react-bootstrap"
+import { Button } from "react-bootstrap"
 import BarChart from './BarChart.js'
 import Doughnut from './DoughnutChart.js'
+import '../HomeView.css'
 
-export default class CategoryBarChart extends Component {
+export default class CategoryChartContainer extends Component {
 
   constructor() {
     super()
@@ -56,44 +57,32 @@ export default class CategoryBarChart extends Component {
   render() {
 
     return (
-      <Grid>
-        <Row>
-          <Col md={2}>
-          </Col>
-          <Col md={8}>
-            <div>
-              {this.state.bar ?
-                <BarChart
-                  data={this.dataObject()}
-                  currentMonth={this.props.currentMonth}
-                />
-                :
-                <Doughnut
-                  data={this.dataObject()}
-                  currentMonth={this.props.currentMonth}
-                />
-              }
-              {this.state.bar ?
-                <Button
-                  id="hvr-fade"
-                  onClick={this.handleToggle}>
-                    Switch to Pie Display
-                </Button>
-                :
-                <Button
-                  id="hvr-fade"
-                  onClick={this.handleToggle}>
-                    Switch to Bar Display
-                </Button>
-              }
-            </div>
-          </Col>
-          <Col md={2}>
-          </Col>
-        </Row>
-        <br/>
-        <br/>
-      </Grid>
+      <div class='graph'>
+        {this.state.bar ?
+          <BarChart
+            data={this.dataObject()}
+            currentMonth={this.props.currentMonth}
+          />
+          :
+          <Doughnut
+            data={this.dataObject()}
+            currentMonth={this.props.currentMonth}
+          />
+        }
+        {this.state.bar ?
+          <Button
+            id="hvr-fade"
+            onClick={this.handleToggle}>
+              Switch to Pie Display
+          </Button>
+          :
+          <Button
+            id="hvr-fade"
+            onClick={this.handleToggle}>
+              Switch to Bar Display
+          </Button>
+        }
+      </div>
     )
   }
 }

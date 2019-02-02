@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import './CategoryDetails.css';
 import Transaction from "../Components/Transaction"
 import ExpenseForm from "../Components/ExpenseForm"
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { fetchingTransactions } from '../../redux/actions/transactions.js'
-import {Table, Button, Grid, Row, Col} from 'react-bootstrap'
+import { Table, Button, Grid, Row, Col } from 'react-bootstrap'
 
 class CategoryDetails extends Component {
   constructor() {
@@ -70,6 +70,7 @@ class CategoryDetails extends Component {
     let reducer = (accumulator, currentValue) => accumulator + currentValue
     let total = arr.reduce(reducer)
     let floatTotal = Math.floor(total * 100) / 100
+
     return floatTotal
   }
 

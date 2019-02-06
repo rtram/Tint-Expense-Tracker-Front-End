@@ -1,4 +1,4 @@
-const URL = 'http://localhost:3001/users/'
+const URL = 'https://tint-expense-tracker-backend.herokuapp.com'
 
 const fetchedTransactions = data => {
   return {
@@ -9,7 +9,7 @@ const fetchedTransactions = data => {
 
 const fetchingTransactions = userId => {
   return dispatch => {
-    fetch(`${URL}${userId}`)
+    fetch(`${URL}/users/${userId}`)
       .then(res => res.json())
       .then(data =>
         dispatch(fetchedTransactions(data))
@@ -26,7 +26,7 @@ const postedTransaction = data => {
 
 const postingTransaction = object => {
   return dispatch => {
-    fetch('http://localhost:3001/transactions', {
+    fetch(`${URL}/transactions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -49,7 +49,7 @@ const updatedTransaction = data => {
 
 const updatingTransaction = object => {
   return dispatch => {
-    fetch(`http://localhost:3001/transactions/${object.id}`, {
+    fetch(`${URL}/transactions/${object.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
@@ -73,7 +73,7 @@ const deletedTransaction = data => {
 const deletingTransaction = object => {
   return dispatch => {
     dispatch(deletedTransaction(object))
-    fetch(`http://localhost:3001/transactions/${object.id}`, {
+    fetch(`${URL}/transactions/${object.id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'

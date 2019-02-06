@@ -2,7 +2,7 @@ import React from 'react'
 import { Carousel } from "react-bootstrap"
 
 const TipsCarousel = () => (
-  <Carousel className="Carousel" interval={1000}>
+  <Carousel className="Carousel" interval={5000}>
     <Carousel.Item>
       <h2>Tip #1</h2>
       <p id="smaller-font" >Check your credit score</p>

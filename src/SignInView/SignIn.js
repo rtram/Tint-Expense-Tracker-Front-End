@@ -1,12 +1,10 @@
 import React from "react"
-import {Button} from "react-bootstrap"
-import {Link} from 'react-router-dom'
+import { Button } from "react-bootstrap"
+import { Link } from 'react-router-dom'
 
 const SignIn = () => (
   <div>
     Sign In
-    <br/>
-    <br/>
     <Link to={`/users/1/`}>
       <Button bsStyle="primary" block><strong>Robin Tram</strong></Button>
     </Link>
@@ -18,10 +16,6 @@ const SignIn = () => (
     <Link to={`/users/3/`}>
       <Button bsStyle="primary" block><strong>Sarah Tram</strong></Button>
     </Link>
-
-    <br/>
-    <br/>
-    <br/>
   </div>
 )
 
